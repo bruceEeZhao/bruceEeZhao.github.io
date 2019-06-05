@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http:/"/>
+  <link href="https://bruceeezhao.github.io/"/>
   <updated>2019-06-05T14:01:14.932Z</updated>
-  <id>http:/</id>
+  <id>https://bruceeezhao.github.io/</id>
   
   <author>
     <name>bruce zhao</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Python操作Access数据库</title>
-    <link href="http:/2019/06/05/Python%E6%93%8D%E4%BD%9CAccess%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>http:/2019/06/05/Python操作Access数据库/</id>
+    <link href="https://bruceeezhao.github.io/2019/06/05/Python%E6%93%8D%E4%BD%9CAccess%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>https://bruceeezhao.github.io/2019/06/05/Python操作Access数据库/</id>
     <published>2019-06-05T14:00:17.000Z</published>
     <updated>2019-06-05T14:01:14.932Z</updated>
     
@@ -36,14 +36,14 @@
     </summary>
     
     
-      <category term="Python" scheme="http:/tags/Python/"/>
+      <category term="Python" scheme="https://bruceeezhao.github.io/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http:/2019/06/05/hello-world/"/>
-    <id>http:/2019/06/05/hello-world/</id>
+    <link href="https://bruceeezhao.github.io/2019/06/05/hello-world/"/>
+    <id>https://bruceeezhao.github.io/2019/06/05/hello-world/</id>
     <published>2019-06-05T12:21:48.902Z</published>
     <updated>2019-06-05T12:21:48.902Z</updated>
     
