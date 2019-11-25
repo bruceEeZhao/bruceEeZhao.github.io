@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="安装rubyruby 存在很多版本，不同的项目可能会使用不同版本的ruby，不同的版本往往有很多不同的依赖使得项目不能运行，因此我们应该考虑到在计算机上管理多个不同版本的ruby。这里我们选用rvm作为ruby的版本管理软件。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-25T07:04:45.007Z">
+<meta property="og:updated_time" content="2019-11-25T10:16:36.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ruby on rails环境搭建">
 <meta name="twitter:description" content="安装rubyruby 存在很多版本，不同的项目可能会使用不同版本的ruby，不同的版本往往有很多不同的依赖使得项目不能运行，因此我们应该考虑到在计算机上管理多个不同版本的ruby。这里我们选用rvm作为ruby的版本管理软件。">
@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-11-25 14:23:42 / Modified: 15:04:45" itemprop="dateCreated datePublished" datetime="2019-11-25T14:23:42+08:00">2019-11-25</time>
+              <time title="Created: 2019-11-25 14:23:42 / Modified: 18:16:36" itemprop="dateCreated datePublished" datetime="2019-11-25T14:23:42+08:00">2019-11-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,6 +283,9 @@
 <h1 id="安装yarn"><a href="#安装yarn" class="headerlink" title="安装yarn"></a>安装yarn</h1><p><a href="https://yarn.bootcss.com/docs/install/#debian-stable" target="_blank" rel="noopener">https://yarn.bootcss.com/docs/install/#debian-stable</a></p>
 <p>yarn 更换国内源<br>yarn config set registry <a href="https://registry.npm.taobao.org/" target="_blank" rel="noopener">https://registry.npm.taobao.org/</a></p>
 <h1 id="安装rails"><a href="#安装rails" class="headerlink" title="安装rails"></a>安装rails</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># gem install rails</span><br></pre></td></tr></table></figure>
+
+<h1 id="ruby-交互式编程"><a href="#ruby-交互式编程" class="headerlink" title="ruby 交互式编程"></a>ruby 交互式编程</h1><p>irb 是ruby自带的交互式变成工具<br>pry 的体验要好与irb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install pry</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -341,7 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装ruby"><span class="nav-number">1.</span> <span class="nav-text">安装ruby</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装rvm"><span class="nav-number">1.1.</span> <span class="nav-text">安装rvm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用rvm管理ruby版本"><span class="nav-number">1.2.</span> <span class="nav-text">使用rvm管理ruby版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用gemset"><span class="nav-number">1.3.</span> <span class="nav-text">使用gemset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换源"><span class="nav-number">2.</span> <span class="nav-text">更换源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gem-更换国内源"><span class="nav-number">2.1.</span> <span class="nav-text">gem 更换国内源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装yarn"><span class="nav-number">3.</span> <span class="nav-text">安装yarn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装rails"><span class="nav-number">4.</span> <span class="nav-text">安装rails</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装ruby"><span class="nav-number">1.</span> <span class="nav-text">安装ruby</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装rvm"><span class="nav-number">1.1.</span> <span class="nav-text">安装rvm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用rvm管理ruby版本"><span class="nav-number">1.2.</span> <span class="nav-text">使用rvm管理ruby版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用gemset"><span class="nav-number">1.3.</span> <span class="nav-text">使用gemset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换源"><span class="nav-number">2.</span> <span class="nav-text">更换源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gem-更换国内源"><span class="nav-number">2.1.</span> <span class="nav-text">gem 更换国内源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装yarn"><span class="nav-number">3.</span> <span class="nav-text">安装yarn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装rails"><span class="nav-number">4.</span> <span class="nav-text">安装rails</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ruby-交互式编程"><span class="nav-number">5.</span> <span class="nav-text">ruby 交互式编程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
