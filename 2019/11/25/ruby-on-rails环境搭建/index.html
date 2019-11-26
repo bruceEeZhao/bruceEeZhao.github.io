@@ -56,7 +56,7 @@
 <meta property="og:description" content="安装rubyruby 存在很多版本，不同的项目可能会使用不同版本的ruby，不同的版本往往有很多不同的依赖使得项目不能运行，因此我们应该考虑到在计算机上管理多个不同版本的ruby。这里我们选用rvm作为ruby的版本管理软件。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://bruceeezhao.github.io/2019/11/25/ruby-on-rails环境搭建/run_command_as_login.png">
-<meta property="og:updated_time" content="2019-11-26T01:16:17.578Z">
+<meta property="og:updated_time" content="2019-11-26T01:30:54.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ruby on rails环境搭建">
 <meta name="twitter:description" content="安装rubyruby 存在很多版本，不同的项目可能会使用不同版本的ruby，不同的版本往往有很多不同的依赖使得项目不能运行，因此我们应该考虑到在计算机上管理多个不同版本的ruby。这里我们选用rvm作为ruby的版本管理软件。">
@@ -220,7 +220,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-26 09:16:17" itemprop="dateModified" datetime="2019-11-26T09:16:17+08:00">2019-11-26</time>
+                <time title="Modified: 2019-11-26 09:30:54" itemprop="dateModified" datetime="2019-11-26T09:30:54+08:00">2019-11-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,6 +257,7 @@
 </ul>
 <p>修改shell为login shell<br>Edit–&gt;Profile Preference–&gt;Command</p>
 <p><img src="//bruceeezhao.github.io/2019/11/25/ruby-on-rails环境搭建/run_command_as_login.png" alt="本地图片"></p>
+<p>修改后关闭此终端，打开一个新的终端继续下面的操作。</p>
 <h2 id="使用rvm管理ruby版本"><a href="#使用rvm管理ruby版本" class="headerlink" title="使用rvm管理ruby版本"></a>使用rvm管理ruby版本</h2><p>在终端中输入  rvm list known 你将会看到如下输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ rvm list known</span><br><span class="line"># MRI Rubies</span><br><span class="line">[ruby-]1.8.6[-p420]</span><br><span class="line">[ruby-]1.8.7[-head] # security released on head</span><br><span class="line">[ruby-]1.9.1[-p431]</span><br><span class="line">[ruby-]1.9.2[-p330]</span><br><span class="line">[ruby-]1.9.3[-p551]</span><br><span class="line">[ruby-]2.0.0[-p648]</span><br><span class="line">[ruby-]2.1[.10]</span><br><span class="line">[ruby-]2.2[.10]</span><br><span class="line">[ruby-]2.3[.8]</span><br><span class="line">[ruby-]2.4[.6]</span><br><span class="line">[ruby-]2.5[.5]</span><br><span class="line">[ruby-]2.6[.3]</span><br><span class="line">[ruby-]2.7[.0-preview1]</span><br><span class="line">ruby-head</span><br></pre></td></tr></table></figure>
 
