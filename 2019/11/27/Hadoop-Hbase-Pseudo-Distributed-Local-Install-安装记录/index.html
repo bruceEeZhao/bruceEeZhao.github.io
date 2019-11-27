@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://bruceeezhao.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Hadoop Hbase Pseudo-Distributed Local Install 安装记录">
+<meta name="keywords" content="hadoop,hbase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop Hbase Pseudo-Distributed Local Install 安装记录">
+<meta property="og:url" content="https://bruceeezhao.github.io/2019/11/27/Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hadoop Hbase Pseudo-Distributed Local Install 安装记录">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-27T06:26:13.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop Hbase Pseudo-Distributed Local Install 安装记录">
+<meta name="twitter:description" content="Hadoop Hbase Pseudo-Distributed Local Install 安装记录">
+
+<link rel="canonical" href="https://bruceeezhao.github.io/2019/11/27/Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Hadoop Hbase Pseudo-Distributed Local Install 安装记录 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2019/11/27/Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop Hbase Pseudo-Distributed Local Install 安装记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-27 14:24:30 / Modified: 14:26:13" itemprop="dateCreated datePublished" datetime="2019-11-27T14:24:30+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境部署/" itemprop="url" rel="index">
+                    <span itemprop="name">环境部署</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录"><a href="#Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录" class="headerlink" title="Hadoop Hbase Pseudo-Distributed Local Install 安装记录"></a>Hadoop Hbase Pseudo-Distributed Local Install 安装记录</h1><a id="more"></a><p>今天部署了一下hadoop和hbase，期间踩了不少坑。写此文以帮助hadoop、hbase的新手避坑。</p>
+<p><strong>不要选择最新的软件</strong><br><strong>不要选择最新的软件</strong><br><strong>不要选择最新的软件</strong><br>重要的事情说三遍</p>
+<h2 id="安装包下载"><a href="#安装包下载" class="headerlink" title="安装包下载"></a>安装包下载</h2><p>jdk: </p>
+<ul>
+<li>版本：jdk-8u191-linux-x64.tar.gz</li>
+<li>网址：wget <a href="http://upyun.qubianzhong.cn/file/java/jdk-8u191-linux-x64.tar.gz" target="_blank" rel="noopener">http://upyun.qubianzhong.cn/file/java/jdk-8u191-linux-x64.tar.gz</a></li>
+<li>来自：<a href="https://cloud.tencent.com/developer/article/1371521" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1371521</a></li>
+</ul>
+<p>hadoop: </p>
+<ul>
+<li>版本：hadoop-2.9.2.tar.gz</li>
+<li>网址：<a href="https://hadoop.apache.org/releases.html" target="_blank" rel="noopener">https://hadoop.apache.org/releases.html</a></li>
+</ul>
+<p>hbase: </p>
+<ul>
+<li>版本：hbase-1.4.9-bin.tar.gz</li>
+<li>网址：<a href="http://hbase.apache.org/downloads.html" target="_blank" rel="noopener">http://hbase.apache.org/downloads.html</a></li>
+</ul>
+<p>百度云：</p>
+<ul>
+<li>链接: <a href="https://pan.baidu.com/s/1z8iX9IxTiYgDNNYp_f5vrA" target="_blank" rel="noopener">https://pan.baidu.com/s/1z8iX9IxTiYgDNNYp_f5vrA</a> </li>
+<li>提取码: 81iu</li>
+</ul>
+<h2 id="jdk"><a href="#jdk" class="headerlink" title="jdk"></a>jdk</h2><p>将压缩包解压放置于你喜欢的目录，并进入该目录，笔者放在了/home/bruce/Software。<br>编辑/etc/profile文件，添加环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/bruce/Software/jdk1.8.0_191</span><br><span class="line">export JAR_HOME=$JAVA_HOME/jre</span><br><span class="line"></span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib:$JAR_HOME/lib:$CLASSPATH</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JAR_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>首先安装以下软件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ssh</span><br><span class="line">$ sudo apt-get install rsync</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载Hadoop："><a href="#下载Hadoop：" class="headerlink" title="下载Hadoop："></a>下载Hadoop：</h3><p>将压缩包解压放置于你喜欢的目录，并进入该目录，笔者放在了/home/bruce/Software。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd hadoop-2.9.2/</span><br></pre></td></tr></table></figure>
+
+<p>可以在/etc/profile中为hadoop添加环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export Hadoop=/home/bruce/Software/hadoop-2.9.2/bin</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JAR_HOME/bin:$Hadoop</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改配置："><a href="#修改配置：" class="headerlink" title="修改配置："></a>修改配置：</h3><p>etc/hadoop/core-site.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>etc/hadoop/hdfs-site.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>修改 etc/hadoop/hadoop-env.sh 文件：<br>在文件末尾加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/bruce/Software/jdk1.8.0_191</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置无密码ssh登录"><a href="#配置无密码ssh登录" class="headerlink" title="配置无密码ssh登录"></a>配置无密码ssh登录</h3><p>确认是否可以无密码登录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh localhost</span><br></pre></td></tr></table></figure>
+
+<p>若不可以则执行以下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -P &apos;&apos; -f ~/.ssh/id_rsa</span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">chmod 0600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地运行一个-MapReduce-job"><a href="#本地运行一个-MapReduce-job" class="headerlink" title="本地运行一个 MapReduce job"></a>本地运行一个 MapReduce job</h3><ol>
+<li><p>格式化文件系统</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -format</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start NameNode daemon and DataNode daemon:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-dfs.sh</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>运行完后应该可以访问<a href="http://localhost:50070/" target="_blank" rel="noopener">http://localhost:50070/</a></p>
+<ol start="3">
+<li><p>Make the HDFS directories required to execute MapReduce jobs:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs -mkdir /user</span><br><span class="line">bin/hdfs dfs -mkdir /user/&lt;username&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Copy the input files into the distributed filesystem:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs -put etc/hadoop input</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run some of the examples provided:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.2.jar grep input output &apos;dfs[a-z.]+&apos;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>执行 jps 可以看到以下进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ jps</span><br><span class="line">15975 Jps</span><br><span class="line">15017 NameNode</span><br><span class="line">15389 SecondaryNameNode</span><br><span class="line">15182 DataNode</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Examine the output files: Copy the output files from the distributed filesystem to the local filesystem and examine them:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs -get output output</span><br><span class="line">cat output/*</span><br></pre></td></tr></table></figure>
+
+<p>成功的话会得到如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">6	dfs.audit.logger</span><br><span class="line">4	dfs.class</span><br><span class="line">3	dfs.logger</span><br><span class="line">3	dfs.server.namenode.</span><br><span class="line">2	dfs.audit.log.maxbackupindex</span><br><span class="line">2	dfs.period</span><br><span class="line">2	dfs.audit.log.maxfilesize</span><br><span class="line">1	dfs.log</span><br><span class="line">1	dfs.file</span><br><span class="line">1	dfs.servers</span><br><span class="line">1	dfsadmin</span><br><span class="line">1	dfsmetrics.log</span><br><span class="line">1	dfs.replication</span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<p>View the output files on the distributed filesystem:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs dfs -cat output/*</span><br></pre></td></tr></table></figure>
+
+<p>会得到一样的输出</p>
+<h2 id="Hbase"><a href="#Hbase" class="headerlink" title="Hbase"></a>Hbase</h2><h3 id="下载Hbase"><a href="#下载Hbase" class="headerlink" title="下载Hbase:"></a>下载Hbase:</h3><p>将压缩包解压放置于你喜欢的目录，并进入该目录，笔者放在了/home/bruce/Software。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd hbase-1.4.9/</span><br></pre></td></tr></table></figure>
+
+<p>可以在/etc/profile中为hbase添加环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export Hbase=/home/bruce/Software/hbase-1.4.9/bin</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JAR_HOME/bin:$Hadoop:$Hbase</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><ol>
+<li><p>编辑 conf/hbase-site.xml 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://localhost:9000/hbase&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.zookeeper.property.dataDir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/home/hadoop/zookeeper&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 conf/hbase-env.sh 文件<br>在文件末尾加入：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/bruce/Software/jdk1.8.0_191</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动hbase</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/start-hbase.sh</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>若启动成功，执行jps会看到一下进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ jps</span><br><span class="line">16503 HMaster</span><br><span class="line">16951 Jps</span><br><span class="line">15017 NameNode</span><br><span class="line">16426 HQuorumPeer</span><br><span class="line">15389 SecondaryNameNode</span><br><span class="line">15182 DataNode</span><br><span class="line">16639 HRegionServer</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>hdfs会自动生成hbase目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/hadoop fs -ls /hbase</span><br><span class="line">Found 8 items</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:33 /hbase/.tmp</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:33 /hbase/MasterProcWALs</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:33 /hbase/WALs</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:33 /hbase/data</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:33 /hbase/hbase</span><br><span class="line">-rw-r--r--   1 hadoop supergroup         42 2019-04-23 23:32 /hbase/hbase.id</span><br><span class="line">-rw-r--r--   1 hadoop supergroup          7 2019-04-23 23:32 /hbase/hbase.version</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-04-23 23:34 /hbase/oldWALs</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>以上操作可以使用root用户进行操作。也可以使用普通用户，若遇到权限问题，可以添加一个hadoop用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#添加用户</span><br><span class="line">sudo addgroup hadoop</span><br><span class="line">sudo adduser -g hadoop hadoop</span><br><span class="line"></span><br><span class="line">#为新用户添加root权限</span><br><span class="line">sudo vim /etc/sudoers </span><br><span class="line">#在文件中添加</span><br><span class="line">hadoop  ALL=(ALL:ALL) ALL</span><br><span class="line"></span><br><span class="line">#改变目录所有权</span><br><span class="line">chown -R hadoop:hadoop hadoop-2.9.2/ </span><br><span class="line">chmod -R 755 hadhbase-1.4.9/</span><br><span class="line"></span><br><span class="line">chown -R hadoop:hadoop hbase-1.4.9/ </span><br><span class="line">chmod -R 755 hbase-1.4.9/</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+              <a href="/tags/hbase/" rel="tag"># hbase</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/25/ruby-on-rails环境搭建/" rel="prev" title="ruby on rails环境搭建">
+      <i class="fa fa-chevron-left"></i> ruby on rails环境搭建
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Hbase-Pseudo-Distributed-Local-Install-安装记录"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Hbase Pseudo-Distributed Local Install 安装记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装包下载"><span class="nav-number">1.1.</span> <span class="nav-text">安装包下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk"><span class="nav-number">1.2.</span> <span class="nav-text">jdk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop"><span class="nav-number">1.3.</span> <span class="nav-text">Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载Hadoop："><span class="nav-number">1.3.2.</span> <span class="nav-text">下载Hadoop：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置："><span class="nav-number">1.3.3.</span> <span class="nav-text">修改配置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置无密码ssh登录"><span class="nav-number">1.3.4.</span> <span class="nav-text">配置无密码ssh登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地运行一个-MapReduce-job"><span class="nav-number">1.3.5.</span> <span class="nav-text">本地运行一个 MapReduce job</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hbase"><span class="nav-number">1.4.</span> <span class="nav-text">Hbase</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载Hbase"><span class="nav-number">1.4.1.</span> <span class="nav-text">下载Hbase:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置"><span class="nav-number">1.4.2.</span> <span class="nav-text">修改配置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bruce zhao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bruceEeZhao" title="GitHub → https://github.com/bruceEeZhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/bruceezhao@foxmail.com" title="E-Mail → bruceezhao@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bruce zhao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
