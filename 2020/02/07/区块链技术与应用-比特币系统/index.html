@@ -47,21 +47,21 @@
   };
 </script>
 
-  <meta name="description" content="#　密码学原理密码学哈希函数">
+  <meta name="description" content="##　密码学原理密码学哈希函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="区块链技术与应用-比特币系统">
 <meta property="og:url" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#　密码学原理密码学哈希函数">
+<meta property="og:description" content="##　密码学原理密码学哈希函数">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkleproof.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/trans.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/script.png">
-<meta property="og:updated_time" content="2020-02-07T12:21:09.174Z">
+<meta property="og:updated_time" content="2020-02-07T12:36:32.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="区块链技术与应用-比特币系统">
-<meta name="twitter:description" content="#　密码学原理密码学哈希函数">
+<meta name="twitter:description" content="##　密码学原理密码学哈希函数">
 <meta name="twitter:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png">
 
 <link rel="canonical" href="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/">
@@ -216,7 +216,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-02-07 16:50:19 / Modified: 20:21:09" itemprop="dateCreated datePublished" datetime="2020-02-07T16:50:19+08:00">2020-02-07</time>
+              <time title="Created: 2020-02-07 16:50:19 / Modified: 20:36:32" itemprop="dateCreated datePublished" datetime="2020-02-07T16:50:19+08:00">2020-02-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#　密码学原理</p><h2 id="密码学哈希函数"><a href="#密码学哈希函数" class="headerlink" title="密码学哈希函数"></a>密码学哈希函数</h2><a id="more"></a>
+        <p>##　密码学原理</p><h3 id="密码学哈希函数"><a href="#密码学哈希函数" class="headerlink" title="密码学哈希函数"></a>密码学哈希函数</h3><a id="more"></a>
 <p>性质： </p>
 <ol>
 <li><p>collision resistance 很难产生哈希碰撞<br>很难找到一个值 m’ 使得 H(m’) = h(m)</p>
@@ -255,13 +255,13 @@
 <ol start="3">
 <li>puzzle friendly 比特币中的哈希函数性质<br>SHA-256<br>difficult to solve,but easy to verify<br>H(block header) &lt;= target</li>
 </ol>
-<h2 id="签名："><a href="#签名：" class="headerlink" title="签名："></a>签名：</h2><p>(public key, private key) 非对称加密体系<br>签名使用私钥，验证使用公钥<br>成立前提：拥有一个好的随机源</p>
-<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p -&gt; ____ &lt;- h()</span><br><span class="line">    |    |</span><br><span class="line">    |    |</span><br><span class="line">    |____|</span><br><span class="line">h() 结构体的哈希值</span><br></pre></td></tr></table></figure>
+<h3 id="签名："><a href="#签名：" class="headerlink" title="签名："></a>签名：</h3><p>(public key, private key) 非对称加密体系<br>签名使用私钥，验证使用公钥<br>成立前提：拥有一个好的随机源</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p -&gt; ____ &lt;- h()</span><br><span class="line">    |    |</span><br><span class="line">    |    |</span><br><span class="line">    |____|</span><br><span class="line">h() 结构体的哈希值</span><br></pre></td></tr></table></figure>
 
 <p>Block chain is a linked list using hash pointers.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">区块链示意图</span><br><span class="line">     ____    ____    ____    ____ </span><br><span class="line">    |    |  |    |  |    |  |    |</span><br><span class="line">    |    |&lt;-|    |&lt;-|    |&lt;-|h() | </span><br><span class="line">    |____|  |____|  |____|  |____|</span><br><span class="line">    创世纪块                  最近产生的区块</span><br><span class="line"></span><br><span class="line">根据前一个区块取哈希，若前面的区块发生变化，则哈希值不能对应上，可以发现篡改</span><br></pre></td></tr></table></figure>
 
-<h2 id="Merkle-tree"><a href="#Merkle-tree" class="headerlink" title="Merkle tree"></a>Merkle tree</h2><p>使用哈希指针的二叉树</p>
+<h3 id="Merkle-tree"><a href="#Merkle-tree" class="headerlink" title="Merkle tree"></a>Merkle tree</h3><p>使用哈希指针的二叉树</p>
 <p>最下面一层是数据块（交易块），上面的节点都是哈希指针。只需保存root hash的值，就可以判断整棵树是否被篡改。  </p>
 <p>每个区块分为两部分： block header ,block body<br>block header:记录root hash<br>block body:记录交易列表<br>轻节点：只保存block header</p>
 <p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png" alt="merkle tree"></p>
@@ -269,12 +269,12 @@
 <p>某个轻节点想证明交易tx是否在merkle tree中，需要向某个全节点发送请求，全节点将标为红色的哈希值告诉轻节点，轻节点即可验证。</p>
 <p>proof of membership  </p>
 <p>当节点按哈希值大小排序时(sorted merkle tree)，是可以证明 nonmembership 的</p>
-<h1 id="数字货币的问题："><a href="#数字货币的问题：" class="headerlink" title="数字货币的问题："></a>数字货币的问题：</h1><ol>
+<h2 id="数字货币的问题："><a href="#数字货币的问题：" class="headerlink" title="数字货币的问题："></a>数字货币的问题：</h2><ol>
 <li><p>doble spending attack<br>如果数字货币只有签名，那么货币可能被复制  </p>
 <p>中心化的解决方法，央行记录货币的拥有者，交易时验证货币拥有者的信息</p>
 </li>
 </ol>
-<h2 id="去中心化的数字货币要解决的问题："><a href="#去中心化的数字货币要解决的问题：" class="headerlink" title="去中心化的数字货币要解决的问题："></a>去中心化的数字货币要解决的问题：</h2><ol>
+<h3 id="去中心化的数字货币要解决的问题："><a href="#去中心化的数字货币要解决的问题：" class="headerlink" title="去中心化的数字货币要解决的问题："></a>去中心化的数字货币要解决的问题：</h3><ol>
 <li>数字货币的发行</li>
 <li>验证交易的有效性</li>
 </ol>
@@ -282,11 +282,11 @@
 <p>交易分为输入和输出：输入包括a的公钥和币的来源，输出部分为接收者的公钥<br>在铸币交易时公布了a的公钥  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">block header</span><br><span class="line"> version</span><br><span class="line"> hash of previous block header</span><br><span class="line"> merkle root hash</span><br><span class="line"> target</span><br><span class="line"> nonce</span><br><span class="line"></span><br><span class="line">block body</span><br><span class="line"> transaction list</span><br></pre></td></tr></table></figure>
 
-<h2 id="Consensus-in-BitCoin"><a href="#Consensus-in-BitCoin" class="headerlink" title="Consensus in BitCoin"></a>Consensus in BitCoin</h2><h1 id="比特币系统的实现"><a href="#比特币系统的实现" class="headerlink" title="比特币系统的实现"></a>比特币系统的实现</h1><h2 id="基于交易的账本"><a href="#基于交易的账本" class="headerlink" title="基于交易的账本"></a>基于交易的账本</h2><p>比特币系统是基于交易的账本，transaction-based ledger  </p>
+<h3 id="Consensus-in-BitCoin"><a href="#Consensus-in-BitCoin" class="headerlink" title="Consensus in BitCoin"></a>Consensus in BitCoin</h3><h2 id="比特币系统的实现"><a href="#比特币系统的实现" class="headerlink" title="比特币系统的实现"></a>比特币系统的实现</h2><h3 id="基于交易的账本"><a href="#基于交易的账本" class="headerlink" title="基于交易的账本"></a>基于交易的账本</h3><p>比特币系统是基于交易的账本，transaction-based ledger  </p>
 <p>比特币的全节点要维护一个utxo的数据结构：Unspent Transaction Output(未花掉的交易的输出的集合)，可以快速检测double spending  </p>
 <p>total inputs = total outputs</p>
-<h2 id="基于账户的账本"><a href="#基于账户的账本" class="headerlink" title="基于账户的账本"></a>基于账户的账本</h2><p>以太坊采用这种模式<br>account-based ledger</p>
-<h2 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h2><p>不断尝试nonce来求解puzzle  </p>
+<h3 id="基于账户的账本"><a href="#基于账户的账本" class="headerlink" title="基于账户的账本"></a>基于账户的账本</h3><p>以太坊采用这种模式<br>account-based ledger</p>
+<h3 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h3><p>不断尝试nonce来求解puzzle  </p>
 <p>每次尝试可以看做是一个bernoulli trial:a random experiment with binary outcome  </p>
 <p>berboulli process: a sequence of independent Bernoulli trails  </p>
 <p>性质： memoryless  </p>
@@ -297,26 +297,26 @@
 
 <p>比特币的稀有性是人为造成的  </p>
 <p>挖矿提供了一种依靠算力投票的有效机制，bitcoin is secured by mining</p>
-<h1 id="比特币网络工作原理"><a href="#比特币网络工作原理" class="headerlink" title="比特币网络工作原理"></a>比特币网络工作原理</h1><p>应用层： bitCoin Block chain<br>网络层： P2P Overlay Network  </p>
+<h2 id="比特币网络工作原理"><a href="#比特币网络工作原理" class="headerlink" title="比特币网络工作原理"></a>比特币网络工作原理</h2><p>应用层： bitCoin Block chain<br>网络层： P2P Overlay Network  </p>
 <p>设计原则： simple, robust, but not efficient<br>传播方式： flooding<br>使用 TCP  </p>
-<h2 id="比特币系统挖矿难度的调整"><a href="#比特币系统挖矿难度的调整" class="headerlink" title="比特币系统挖矿难度的调整"></a>比特币系统挖矿难度的调整</h2><p>H(block header) &lt;= target  </p>
+<h3 id="比特币系统挖矿难度的调整"><a href="#比特币系统挖矿难度的调整" class="headerlink" title="比特币系统挖矿难度的调整"></a>比特币系统挖矿难度的调整</h3><p>H(block header) &lt;= target  </p>
 <p>SHA-256  2^256  </p>
 <p>挖矿难度与target成反比<br>difficulty = difficulty_1_target / target  </p>
 <p>比特币系统中规定每隔10分钟出一个区块，每隔2016个区块调整一次难度  </p>
 <p>target = target * [(actual time) / (expected time)]  </p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="全节点"><a href="#全节点" class="headerlink" title="全节点"></a>全节点</h2><blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="全节点"><a href="#全节点" class="headerlink" title="全节点"></a>全节点</h3><blockquote>
 <p>一直在线<br>在本地硬盘上维护完整的区块链信息<br>在内存中维护UTXO集合，以便快速验证交易的正确性<br>监听比特币网络上的交易信息，验证每个交易的合法性<br>决定哪些交易会被打包到区块里<br>监听别的矿工挖出来的区块，验证其合法性<br>挖矿</p>
 <ul>
 <li>决定沿着哪条链挖下去</li>
 <li>当出现等长的分叉的时候，选择哪一个分叉</li>
 </ul>
 </blockquote>
-<h2 id="轻节点"><a href="#轻节点" class="headerlink" title="轻节点"></a>轻节点</h2><blockquote>
+<h3 id="轻节点"><a href="#轻节点" class="headerlink" title="轻节点"></a>轻节点</h3><blockquote>
 <p>不是一直在线<br>不用保存整个区块链，只保存每个区块的块头<br>不用保存全部交易，只保存与自己相关的交易<br>无法检验大多数交易的合法性，只能检验与自己相关的交易的合法性<br>无法检验网上发布的区块的正确性<br>可以验证挖矿的难度<br>只能检测哪个是最长链，不知道哪个是最长合法链</p>
 </blockquote>
-<h2 id="挖矿芯片："><a href="#挖矿芯片：" class="headerlink" title="挖矿芯片："></a>挖矿芯片：</h2><p>CPU -&gt; GPU -&gt; ASIC(Applicition Specific Integrated Circuit)  </p>
+<h3 id="挖矿芯片："><a href="#挖矿芯片：" class="headerlink" title="挖矿芯片："></a>挖矿芯片：</h3><p>CPU -&gt; GPU -&gt; ASIC(Applicition Specific Integrated Circuit)  </p>
 <p>一种ASIC只能为一种加密货币挖矿，除非mining puzzle相同（merge mining）</p>
-<h2 id="矿池："><a href="#矿池：" class="headerlink" title="矿池："></a>矿池：</h2><p>一般有两种组织方式  </p>
+<h3 id="矿池："><a href="#矿池：" class="headerlink" title="矿池："></a>矿池：</h3><p>一般有两种组织方式  </p>
 <ol>
 <li>集中式（属于同一个机构）</li>
 <li>分布式（属于不同机构）</li>
@@ -332,22 +332,22 @@
 <li>分叉攻击</li>
 <li>Boycott(A账户发起交易，立刻分叉)</li>
 </ul>
-<h1 id="比特币脚本"><a href="#比特币脚本" class="headerlink" title="比特币脚本"></a>比特币脚本</h1><p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/script.png" alt="script"></p>
+<h2 id="比特币脚本"><a href="#比特币脚本" class="headerlink" title="比特币脚本"></a>比特币脚本</h2><p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/script.png" alt="script"></p>
 <p>先执行input script再执行output script，如果过程中出现任何错误都认为交易非法。  </p>
 <p>输入输出脚本类型：</p>
-<h2 id="P2PK-Pay-to-Public-Key"><a href="#P2PK-Pay-to-Public-Key" class="headerlink" title="P2PK(Pay to Public Key)"></a>P2PK(Pay to Public Key)</h2><p><strong>input script:</strong><br>  PUSHDATA(sig)</p>
+<h3 id="P2PK-Pay-to-Public-Key"><a href="#P2PK-Pay-to-Public-Key" class="headerlink" title="P2PK(Pay to Public Key)"></a>P2PK(Pay to Public Key)</h3><p><strong>input script:</strong><br>  PUSHDATA(sig)</p>
 <p><strong>output script:</strong><br>  PUSGDATA(PubKey)<br>  CHECKSIG</p>
 <hr>
 <p>脚本执行<br>PUSHDATA(sig)<br>PUSHDATA(PubKey)<br>CHECKSIG</p>
 <hr>
 <p>堆栈元素变化：<br>sig -&gt; PubKey,sig -&gt; true</p>
-<h2 id="P2PKH-Pay-to-Public-Key-Hash"><a href="#P2PKH-Pay-to-Public-Key-Hash" class="headerlink" title="P2PKH(Pay to Public Key Hash)"></a>P2PKH(Pay to Public Key Hash)</h2><p><strong>input script:</strong><br>  PUSHDATA(sig)<br>  PUSHDATA(PubKey)  </p>
+<h3 id="P2PKH-Pay-to-Public-Key-Hash"><a href="#P2PKH-Pay-to-Public-Key-Hash" class="headerlink" title="P2PKH(Pay to Public Key Hash)"></a>P2PKH(Pay to Public Key Hash)</h3><p><strong>input script:</strong><br>  PUSHDATA(sig)<br>  PUSHDATA(PubKey)  </p>
 <p><strong>output</strong><br>  DUP<br>  HASH160<br>  PUSHDATA(PubKeyHash)<br>  EQUALVERIFY(比较栈顶两个哈希值是否相等)<br>  CHECKSIG  </p>
 <hr>
 <p>脚本执行<br>PUSHDATA(sig)<br>PUSHDATA(PubKey)<br>DUP<br>HASH160<br>PUSHDATA(PubKeyHash)<br>EQUALVERIFY(比较栈顶两个哈希值是否相等)<br>CHECKSIG  </p>
 <hr>
 <p>堆栈元素变化：<br>sig -&gt; pubKey,sig -&gt; pubKey,PubKey,sig -&gt; PubKeyHash,PubKey,sig -&gt; PubKeyHash,PubKeyHash,PubKey,sig -&gt; PubKey,sig -&gt; True</p>
-<h2 id="P2SH-Pay-to-Script-Hash"><a href="#P2SH-Pay-to-Script-Hash" class="headerlink" title="P2SH(Pay to Script Hash)"></a>P2SH(Pay to Script Hash)</h2><p>采用BIP16的方案：<br><strong>input script:</strong><br>  …<br>  PUSHDATA(sig)<br>  …<br>  PUSHDATA(serialized redeemScript)  </p>
+<h3 id="P2SH-Pay-to-Script-Hash"><a href="#P2SH-Pay-to-Script-Hash" class="headerlink" title="P2SH(Pay to Script Hash)"></a>P2SH(Pay to Script Hash)</h3><p>采用BIP16的方案：<br><strong>input script:</strong><br>  …<br>  PUSHDATA(sig)<br>  …<br>  PUSHDATA(serialized redeemScript)  </p>
 <p><strong>output scrpit:</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
 <hr>
 <p>进一步说明  </p>
@@ -367,15 +367,15 @@
 <li>多重签名形式</li>
 </ol>
 <hr>
-<h3 id="用P2SH实现P2PK"><a href="#用P2SH实现P2PK" class="headerlink" title="用P2SH实现P2PK"></a>用P2SH实现P2PK</h3><p><strong>redeemScript:</strong><br>  PUSHDATA(PubKey)<br>  CHECKSIG  </p>
+<h4 id="用P2SH实现P2PK"><a href="#用P2SH实现P2PK" class="headerlink" title="用P2SH实现P2PK"></a>用P2SH实现P2PK</h4><p><strong>redeemScript:</strong><br>  PUSHDATA(PubKey)<br>  CHECKSIG  </p>
 <p><strong>input script</strong><br>  PUSHDATA(sig)<br>  PUSHDATA(serialized redeemScript)  </p>
 <p><strong>output script</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
 <p>第一阶段的验证：<br>  PUSHDATA(sig)<br>  PUSHDATA(serialized redeemScript)<br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
 <p>第二阶段的验证：<br>  PUSHDATA(PubKey)<br>  CHECKSIG  </p>
-<h3 id="多重签名"><a href="#多重签名" class="headerlink" title="多重签名"></a>多重签名</h3><p>例如有5个人，使用其中3个签名可以对账户进行操作<br>最早的多重签名，目前已经不推荐使用  </p>
+<h4 id="多重签名"><a href="#多重签名" class="headerlink" title="多重签名"></a>多重签名</h4><p>例如有5个人，使用其中3个签名可以对账户进行操作<br>最早的多重签名，目前已经不推荐使用  </p>
 <p><strong>input script</strong><br>  ×               (此处的x是因为代码中的bug，向栈中压入一个空元素)<br>  PUSHDATA(Sig_1)<br>  PUSHDATA(Sig_2)<br>  …<br>  PUSHDATA(Sig_M)  </p>
 <p><strong>output script</strong><br>  M<br>  PUSHDATA(pubkey_1)<br>  PUSHDATA(pubkey_2)<br>  …<br>  PUSHDATA(pubkey_N)<br>  N<br>  CHECKMULISIG  </p>
-<h3 id="用P2SH实现多重签名"><a href="#用P2SH实现多重签名" class="headerlink" title="用P2SH实现多重签名"></a>用P2SH实现多重签名</h3><p><strong>input script:</strong><br>  ×<br>  PUSHDATA(Sig_1)<br>  PUSHDATA(Sig_2)<br>  …<br>  PUSHDATA(Sig_M)<br>  PUSHDATA(serialized RedeemScript)  </p>
+<h4 id="用P2SH实现多重签名"><a href="#用P2SH实现多重签名" class="headerlink" title="用P2SH实现多重签名"></a>用P2SH实现多重签名</h4><p><strong>input script:</strong><br>  ×<br>  PUSHDATA(Sig_1)<br>  PUSHDATA(Sig_2)<br>  …<br>  PUSHDATA(Sig_M)<br>  PUSHDATA(serialized RedeemScript)  </p>
 <p><strong>output script:</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
 <p><strong>redeemScript:</strong><br>  M<br>  PUSHDATA(pubkey_1)<br>  PUSHDATA(pubkey_2)<br>  …<br>  PUSHDATA(pubkey_N)<br>  N<br>  CHECKMULISIG  </p>
 <hr>
@@ -386,7 +386,7 @@
 <p>第二阶段：  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">PUSHDATA(pubkey_1)  </span><br><span class="line">PUSHDATA(pubkey_2)  </span><br><span class="line">PUSHDATA(pubkey_3)</span><br><span class="line">3</span><br><span class="line">CHECKMULISIG</span><br></pre></td></tr></table></figure>
 
-<h2 id="Proof-of-Burn"><a href="#Proof-of-Burn" class="headerlink" title="Proof of Burn"></a>Proof of Burn</h2><ul>
+<h3 id="Proof-of-Burn"><a href="#Proof-of-Burn" class="headerlink" title="Proof of Burn"></a>Proof of Burn</h3><ul>
 <li>output script  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RETURN </span><br><span class="line">  [zero or more ops or text]</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -395,7 +395,7 @@
 <ul>
 <li>脚本说明：<br>假如有一个交易的input指向这个output，不论input里的input script如何设计，执行到RETURN命令之后都会直接返回false，不会执行RETURN后面的其他指令，所以这个outpu无法再花出去，其对应的UTXO也就可以被剪枝了，无需保存。</li>
 </ul>
-<h1 id="比特币分叉-fork"><a href="#比特币分叉-fork" class="headerlink" title="比特币分叉(fork)"></a>比特币分叉(fork)</h1><p>成因：  </p>
+<h2 id="比特币分叉-fork"><a href="#比特币分叉-fork" class="headerlink" title="比特币分叉(fork)"></a>比特币分叉(fork)</h2><p>成因：  </p>
 <ul>
 <li><p>state fork<br>挖矿时，两个矿工几乎同时发布区块，就会产生一个临时性的分叉  </p>
 <ul>
@@ -409,9 +409,9 @@
 </ul>
 </li>
 </ul>
-<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>对比特币协议内容的分歧，例如区块的大小限制  </p>
+<h3 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h3><p>对比特币协议内容的分歧，例如区块的大小限制  </p>
 <p>假设新节点更新了协议，旧节点没有更新，那么新节点挖出来的区块不被旧节点认可，新节点在新分叉1上挖，旧节点在分叉2上挖，会产生永久的分叉。</p>
-<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>对比特币协议添加一些限制，使得原来合法的交易（区块）在新的协议中不合法。  </p>
+<h3 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h3><p>对比特币协议添加一些限制，使得原来合法的交易（区块）在新的协议中不合法。  </p>
 <p>假设区块大小由1M改为0.5M，新节点更新了协议，旧节点没有更新，新节点挖出的区块被老节点认可，老节点挖出的区块不被认可，会出现暂时的分叉。  </p>
 <p>实际情况：  </p>
 <ol>
@@ -474,7 +474,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#密码学哈希函数"><span class="nav-number">1.</span> <span class="nav-text">密码学哈希函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#签名："><span class="nav-number">2.</span> <span class="nav-text">签名：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number"></span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希指针"><span class="nav-number">1.</span> <span class="nav-text">哈希指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merkle-tree"><span class="nav-number">2.</span> <span class="nav-text">Merkle tree</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数字货币的问题："><span class="nav-number"></span> <span class="nav-text">数字货币的问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化的数字货币要解决的问题："><span class="nav-number">1.</span> <span class="nav-text">去中心化的数字货币要解决的问题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consensus-in-BitCoin"><span class="nav-number">2.</span> <span class="nav-text">Consensus in BitCoin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币系统的实现"><span class="nav-number"></span> <span class="nav-text">比特币系统的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于交易的账本"><span class="nav-number">1.</span> <span class="nav-text">基于交易的账本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于账户的账本"><span class="nav-number">2.</span> <span class="nav-text">基于账户的账本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挖矿"><span class="nav-number">3.</span> <span class="nav-text">挖矿</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币网络工作原理"><span class="nav-number"></span> <span class="nav-text">比特币网络工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币系统挖矿难度的调整"><span class="nav-number">1.</span> <span class="nav-text">比特币系统挖矿难度的调整</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全节点"><span class="nav-number">1.</span> <span class="nav-text">全节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻节点"><span class="nav-number">2.</span> <span class="nav-text">轻节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挖矿芯片："><span class="nav-number">3.</span> <span class="nav-text">挖矿芯片：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矿池："><span class="nav-number">4.</span> <span class="nav-text">矿池：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币脚本"><span class="nav-number"></span> <span class="nav-text">比特币脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P2PK-Pay-to-Public-Key"><span class="nav-number">1.</span> <span class="nav-text">P2PK(Pay to Public Key)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2PKH-Pay-to-Public-Key-Hash"><span class="nav-number">2.</span> <span class="nav-text">P2PKH(Pay to Public Key Hash)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2SH-Pay-to-Script-Hash"><span class="nav-number">3.</span> <span class="nav-text">P2SH(Pay to Script Hash)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用P2SH实现P2PK"><span class="nav-number">3.1.</span> <span class="nav-text">用P2SH实现P2PK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多重签名"><span class="nav-number">3.2.</span> <span class="nav-text">多重签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用P2SH实现多重签名"><span class="nav-number">3.3.</span> <span class="nav-text">用P2SH实现多重签名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proof-of-Burn"><span class="nav-number">4.</span> <span class="nav-text">Proof of Burn</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币分叉-fork"><span class="nav-number"></span> <span class="nav-text">比特币分叉(fork)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-fork"><span class="nav-number">1.</span> <span class="nav-text">hard fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#soft-fork"><span class="nav-number">2.</span> <span class="nav-text">soft fork</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#密码学哈希函数"><span class="nav-number">1.</span> <span class="nav-text">密码学哈希函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签名："><span class="nav-number">2.</span> <span class="nav-text">签名：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number"></span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希指针"><span class="nav-number">1.</span> <span class="nav-text">哈希指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merkle-tree"><span class="nav-number">2.</span> <span class="nav-text">Merkle tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字货币的问题："><span class="nav-number"></span> <span class="nav-text">数字货币的问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#去中心化的数字货币要解决的问题："><span class="nav-number">1.</span> <span class="nav-text">去中心化的数字货币要解决的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consensus-in-BitCoin"><span class="nav-number">2.</span> <span class="nav-text">Consensus in BitCoin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币系统的实现"><span class="nav-number"></span> <span class="nav-text">比特币系统的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于交易的账本"><span class="nav-number">1.</span> <span class="nav-text">基于交易的账本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于账户的账本"><span class="nav-number">2.</span> <span class="nav-text">基于账户的账本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挖矿"><span class="nav-number">3.</span> <span class="nav-text">挖矿</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币网络工作原理"><span class="nav-number"></span> <span class="nav-text">比特币网络工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比特币系统挖矿难度的调整"><span class="nav-number">1.</span> <span class="nav-text">比特币系统挖矿难度的调整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全节点"><span class="nav-number">1.</span> <span class="nav-text">全节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#轻节点"><span class="nav-number">2.</span> <span class="nav-text">轻节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挖矿芯片："><span class="nav-number">3.</span> <span class="nav-text">挖矿芯片：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矿池："><span class="nav-number">4.</span> <span class="nav-text">矿池：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币脚本"><span class="nav-number"></span> <span class="nav-text">比特币脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P2PK-Pay-to-Public-Key"><span class="nav-number">1.</span> <span class="nav-text">P2PK(Pay to Public Key)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P2PKH-Pay-to-Public-Key-Hash"><span class="nav-number">2.</span> <span class="nav-text">P2PKH(Pay to Public Key Hash)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P2SH-Pay-to-Script-Hash"><span class="nav-number">3.</span> <span class="nav-text">P2SH(Pay to Script Hash)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用P2SH实现P2PK"><span class="nav-number">3.1.</span> <span class="nav-text">用P2SH实现P2PK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多重签名"><span class="nav-number">3.2.</span> <span class="nav-text">多重签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用P2SH实现多重签名"><span class="nav-number">3.3.</span> <span class="nav-text">用P2SH实现多重签名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proof-of-Burn"><span class="nav-number">4.</span> <span class="nav-text">Proof of Burn</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币分叉-fork"><span class="nav-number"></span> <span class="nav-text">比特币分叉(fork)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hard-fork"><span class="nav-number">1.</span> <span class="nav-text">hard fork</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#soft-fork"><span class="nav-number">2.</span> <span class="nav-text">soft fork</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
