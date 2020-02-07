@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://bruceeezhao.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="参考：http://dmitrypol.github.io/2015/09/10/rails-admin.htmlhttp://fernandomarcelo.com/2012/05/rails-admin-creating-a-custom-action/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rails-admin自定义行为">
+<meta property="og:url" content="https://bruceeezhao.github.io/2019/12/10/rails-admin自定义行为/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考：http://dmitrypol.github.io/2015/09/10/rails-admin.htmlhttp://fernandomarcelo.com/2012/05/rails-admin-creating-a-custom-action/">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-02-07T12:29:06.139Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rails-admin自定义行为">
+<meta name="twitter:description" content="参考：http://dmitrypol.github.io/2015/09/10/rails-admin.htmlhttp://fernandomarcelo.com/2012/05/rails-admin-creating-a-custom-action/">
+
+<link rel="canonical" href="https://bruceeezhao.github.io/2019/12/10/rails-admin自定义行为/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>rails-admin自定义行为 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2019/12/10/rails-admin自定义行为/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rails-admin自定义行为
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-10 18:45:48" itemprop="dateCreated datePublished" datetime="2019-12-10T18:45:48+08:00">2019-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-07 20:29:06" itemprop="dateModified" datetime="2020-02-07T20:29:06+08:00">2020-02-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>参考：<br><a href="http://dmitrypol.github.io/2015/09/10/rails-admin.html" target="_blank" rel="noopener">http://dmitrypol.github.io/2015/09/10/rails-admin.html</a><br><a href="http://fernandomarcelo.com/2012/05/rails-admin-creating-a-custom-action/" target="_blank" rel="noopener">http://fernandomarcelo.com/2012/05/rails-admin-creating-a-custom-action/</a></p><a id="more"></a>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ol>
+<li><a href="https://stackoverflow.com/questions/2778522/rails-update-attribute-vs-update-attributes" target="_blank" rel="noopener">Rails: update_attribute vs update_attributes</a>  </li>
+</ol>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><ol>
+<li><p>lib/rails_admin_course_open.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'rails_admin/config/actions'</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'rails_admin/config/actions/base'</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">RailsAdminCourseOpen</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">RailsAdmin</span></span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">Config</span></span></span><br><span class="line">    <span class="class"><span class="keyword">module</span> <span class="title">Actions</span></span></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">CourseOpen</span> &lt; RailsAdmin::Config::<span class="title">Actions::Base</span></span></span><br><span class="line">        <span class="comment"># There are several options that you can set here. </span></span><br><span class="line">        <span class="comment"># Check https://github.com/sferik/rails_admin/blob/master/lib/rails_admin/config/actions/base.rb for more info.</span></span><br><span class="line"> </span><br><span class="line">        register_instance_option <span class="symbol">:bulkable?</span> <span class="keyword">do</span></span><br><span class="line">          <span class="literal">true</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">        register_instance_option <span class="symbol">:controller</span> <span class="keyword">do</span></span><br><span class="line">          Proc.new <span class="keyword">do</span></span><br><span class="line">            <span class="comment"># Get all selected rows</span></span><br><span class="line">            @objects = list_entries(@model_config, <span class="symbol">:destroy</span>)</span><br><span class="line"> </span><br><span class="line">            <span class="comment"># Update field open to true</span></span><br><span class="line">            @objects.each <span class="keyword">do</span> <span class="params">|object|</span></span><br><span class="line">                object.update_attribute(<span class="symbol">:open</span>, <span class="literal">true</span>)</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">            flash[<span class="symbol">:success</span>] = <span class="string">"<span class="subst">#&#123;@model_config.label&#125;</span> successfully opend."</span></span><br><span class="line"> </span><br><span class="line">            redirect_to back_or_index</span><br><span class="line">          <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">CourseClose</span> &lt; RailsAdmin::Config::<span class="title">Actions::Base</span></span></span><br><span class="line">        <span class="comment"># There are several options that you can set here. </span></span><br><span class="line">        <span class="comment"># Check https://github.com/sferik/rails_admin/blob/master/lib/rails_admin/config/actions/base.rb for more info.</span></span><br><span class="line"> </span><br><span class="line">        register_instance_option <span class="symbol">:bulkable?</span> <span class="keyword">do</span></span><br><span class="line">          <span class="literal">true</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">        register_instance_option <span class="symbol">:controller</span> <span class="keyword">do</span></span><br><span class="line">          Proc.new <span class="keyword">do</span></span><br><span class="line">            <span class="comment"># Get all selected rows</span></span><br><span class="line">            @objects = list_entries(@model_config, <span class="symbol">:destroy</span>)</span><br><span class="line">            <span class="comment"># Update field open to true</span></span><br><span class="line">            @objects.each <span class="keyword">do</span> <span class="params">|object|</span></span><br><span class="line">                object.update_attribute(<span class="symbol">:open</span>, <span class="literal">false</span>)</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">            flash[<span class="symbol">:success</span>] = <span class="string">"<span class="subst">#&#123;@model_config.label&#125;</span> successfully closed."</span></span><br><span class="line"> </span><br><span class="line">            redirect_to back_or_index</span><br><span class="line">          <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>config/initializers/rails_admin.rb  注册</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">RailsAdmin.config <span class="keyword">do</span> <span class="params">|config|</span></span><br><span class="line">  <span class="comment"># Register the class in lib/rails_admin_publish.rb</span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">RailsAdmin</span></span></span><br><span class="line">    <span class="class"><span class="keyword">module</span> <span class="title">Config</span></span></span><br><span class="line">      <span class="class"><span class="keyword">module</span> <span class="title">Actions</span></span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">CourseOpen</span> &lt; RailsAdmin::Config::<span class="title">Actions::Base</span></span></span><br><span class="line">          RailsAdmin::Config::Actions.register(<span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">CourseClose</span> &lt; RailsAdmin::Config::<span class="title">Actions::Base</span></span></span><br><span class="line">          RailsAdmin::Config::Actions.register(<span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  config.actions <span class="keyword">do</span></span><br><span class="line">    <span class="comment"># root actions</span></span><br><span class="line">    dashboard                     <span class="comment"># mandatory</span></span><br><span class="line">    <span class="comment"># collection actions</span></span><br><span class="line">    index                         <span class="comment"># mandatory</span></span><br><span class="line">    new</span><br><span class="line">    export</span><br><span class="line">    history_index</span><br><span class="line">    bulk_delete</span><br><span class="line">    <span class="comment"># member actions</span></span><br><span class="line">    show</span><br><span class="line">    edit</span><br><span class="line">    delete</span><br><span class="line">    history_show</span><br><span class="line">    <span class="comment"># show_in_app</span></span><br><span class="line">    course_open <span class="keyword">do</span></span><br><span class="line">      <span class="comment"># Make it visible only for Course model. You can remove this if you don't need.</span></span><br><span class="line">      visible <span class="keyword">do</span></span><br><span class="line">        bindings[<span class="symbol">:abstract_model</span>].model.to_s == <span class="string">"Course"</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    course_close <span class="keyword">do</span></span><br><span class="line">      <span class="comment"># Make it visible only for Course model. You can remove this if you don't need.</span></span><br><span class="line">      visible <span class="keyword">do</span></span><br><span class="line">        bindings[<span class="symbol">:abstract_model</span>].model.to_s == <span class="string">"Course"</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>config/locales/zh-CN.yml</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">actions:</span></span><br><span class="line">     <span class="symbol">course_open:</span></span><br><span class="line">       <span class="symbol">menu:</span> <span class="string">"开启选课"</span></span><br><span class="line">       <span class="symbol">bulk_link:</span> <span class="string">"开启选课%&#123;model_label_plural&#125;"</span></span><br><span class="line">     <span class="symbol">course_close:</span></span><br><span class="line">       <span class="symbol">menu:</span> <span class="string">"关闭选课"</span></span><br><span class="line">       <span class="symbol">bulk_link:</span> <span class="string">"关闭选课%&#123;model_label_plural&#125;"</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/10/rails使用searchkick和elasticsearch进行全文搜索/" rel="prev" title="rails使用searchkick和elasticsearch进行全文搜索">
+      <i class="fa fa-chevron-left"></i> rails使用searchkick和elasticsearch进行全文搜索
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/07/区块链技术与应用-比特币系统/" rel="next" title="区块链技术与应用-比特币系统">
+      区块链技术与应用-比特币系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bruce zhao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bruceEeZhao" title="GitHub → https://github.com/bruceEeZhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/bruceezhao@foxmail.com" title="E-Mail → bruceezhao@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bruce zhao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

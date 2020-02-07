@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://bruceeezhao.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="#　密码学原理密码学哈希函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链技术与应用-比特币系统">
+<meta property="og:url" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#　密码学原理密码学哈希函数">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkleproof.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/trans.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/script.png">
+<meta property="og:updated_time" content="2020-02-07T12:21:09.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="区块链技术与应用-比特币系统">
+<meta name="twitter:description" content="#　密码学原理密码学哈希函数">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png">
+
+<link rel="canonical" href="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>区块链技术与应用-比特币系统 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          区块链技术与应用-比特币系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-07 16:50:19 / Modified: 20:21:09" itemprop="dateCreated datePublished" datetime="2020-02-07T16:50:19+08:00">2020-02-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/区块链技术与应用/" itemprop="url" rel="index">
+                    <span itemprop="name">区块链技术与应用</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#　密码学原理</p><h2 id="密码学哈希函数"><a href="#密码学哈希函数" class="headerlink" title="密码学哈希函数"></a>密码学哈希函数</h2><a id="more"></a>
+<p>性质： </p>
+<ol>
+<li><p>collision resistance 很难产生哈希碰撞<br>很难找到一个值 m’ 使得 H(m’) = h(m)</p>
+</li>
+<li><p>hiding 单向<br>x -&gt; H(x)<br>从哈希值h(x)不能反推出x<br>成立前提:输入空间足够大，概率分布较均匀  </p>
+</li>
+</ol>
+<blockquote>
+<p>这两个性质结合可以应用于<br>digital commitment<br>digital equivalent of a sealed envelope</p>
+</blockquote>
+<ol start="3">
+<li>puzzle friendly 比特币中的哈希函数性质<br>SHA-256<br>difficult to solve,but easy to verify<br>H(block header) &lt;= target</li>
+</ol>
+<h2 id="签名："><a href="#签名：" class="headerlink" title="签名："></a>签名：</h2><p>(public key, private key) 非对称加密体系<br>签名使用私钥，验证使用公钥<br>成立前提：拥有一个好的随机源</p>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p -&gt; ____ &lt;- h()</span><br><span class="line">    |    |</span><br><span class="line">    |    |</span><br><span class="line">    |____|</span><br><span class="line">h() 结构体的哈希值</span><br></pre></td></tr></table></figure>
+
+<p>Block chain is a linked list using hash pointers.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">区块链示意图</span><br><span class="line">     ____    ____    ____    ____ </span><br><span class="line">    |    |  |    |  |    |  |    |</span><br><span class="line">    |    |&lt;-|    |&lt;-|    |&lt;-|h() | </span><br><span class="line">    |____|  |____|  |____|  |____|</span><br><span class="line">    创世纪块                  最近产生的区块</span><br><span class="line"></span><br><span class="line">根据前一个区块取哈希，若前面的区块发生变化，则哈希值不能对应上，可以发现篡改</span><br></pre></td></tr></table></figure>
+
+<h2 id="Merkle-tree"><a href="#Merkle-tree" class="headerlink" title="Merkle tree"></a>Merkle tree</h2><p>使用哈希指针的二叉树</p>
+<p>最下面一层是数据块（交易块），上面的节点都是哈希指针。只需保存root hash的值，就可以判断整棵树是否被篡改。  </p>
+<p>每个区块分为两部分： block header ,block body<br>block header:记录root hash<br>block body:记录交易列表<br>轻节点：只保存block header</p>
+<p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkletree.png" alt="merkle tree"></p>
+<p>作用：提供merkle proof<br><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/merkleproof.png" alt="merkle proof"></p>
+<p>某个轻节点想证明交易tx是否在merkle tree中，需要向某个全节点发送请求，全节点将标为红色的哈希值告诉轻节点，轻节点即可验证。</p>
+<p>proof of membership  </p>
+<p>当节点按哈希值大小排序时(sorted merkle tree)，是可以证明 nonmembership 的</p>
+<h1 id="数字货币的问题："><a href="#数字货币的问题：" class="headerlink" title="数字货币的问题："></a>数字货币的问题：</h1><ol>
+<li><p>doble spending attack<br>如果数字货币只有签名，那么货币可能被复制  </p>
+<p>中心化的解决方法，央行记录货币的拥有者，交易时验证货币拥有者的信息</p>
+</li>
+</ol>
+<h2 id="去中心化的数字货币要解决的问题："><a href="#去中心化的数字货币要解决的问题：" class="headerlink" title="去中心化的数字货币要解决的问题："></a>去中心化的数字货币要解决的问题：</h2><ol>
+<li>数字货币的发行</li>
+<li>验证交易的有效性</li>
+</ol>
+<p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/trans.png" alt="trans"></p>
+<p>交易分为输入和输出：输入包括a的公钥和币的来源，输出部分为接收者的公钥<br>在铸币交易时公布了a的公钥  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">block header</span><br><span class="line"> version</span><br><span class="line"> hash of previous block header</span><br><span class="line"> merkle root hash</span><br><span class="line"> target</span><br><span class="line"> nonce</span><br><span class="line"></span><br><span class="line">block body</span><br><span class="line"> transaction list</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consensus-in-BitCoin"><a href="#Consensus-in-BitCoin" class="headerlink" title="Consensus in BitCoin"></a>Consensus in BitCoin</h2><h1 id="比特币系统的实现"><a href="#比特币系统的实现" class="headerlink" title="比特币系统的实现"></a>比特币系统的实现</h1><h2 id="基于交易的账本"><a href="#基于交易的账本" class="headerlink" title="基于交易的账本"></a>基于交易的账本</h2><p>比特币系统是基于交易的账本，transaction-based ledger  </p>
+<p>比特币的全节点要维护一个utxo的数据结构：Unspent Transaction Output(未花掉的交易的输出的集合)，可以快速检测double spending  </p>
+<p>total inputs = total outputs</p>
+<h2 id="基于账户的账本"><a href="#基于账户的账本" class="headerlink" title="基于账户的账本"></a>基于账户的账本</h2><p>以太坊采用这种模式<br>account-based ledger</p>
+<h2 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h2><p>不断尝试nonce来求解puzzle  </p>
+<p>每次尝试可以看做是一个bernoulli trial:a random experiment with binary outcome  </p>
+<p>berboulli process: a sequence of independent Bernoulli trails  </p>
+<p>性质： memoryless  </p>
+<p>每次的成功概率很小，可以用泊松近似（Poisson process）</p>
+<p>出块时间服从指数分布 x^(-1)  </p>
+<p>比特币的总数为 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">21万*50 + 21万*25 + ....</span><br><span class="line">= 21万 * 50 * (1+1/2+1/4+...) = 2100万</span><br></pre></td></tr></table></figure>
+
+<p>比特币的稀有性是人为造成的  </p>
+<p>挖矿提供了一种依靠算力投票的有效机制，bitcoin is secured by mining</p>
+<h1 id="比特币网络工作原理"><a href="#比特币网络工作原理" class="headerlink" title="比特币网络工作原理"></a>比特币网络工作原理</h1><p>应用层： bitCoin Block chain<br>网络层： P2P Overlay Network  </p>
+<p>设计原则： simple, robust, but not efficient<br>传播方式： flooding<br>使用 TCP  </p>
+<h2 id="比特币系统挖矿难度的调整"><a href="#比特币系统挖矿难度的调整" class="headerlink" title="比特币系统挖矿难度的调整"></a>比特币系统挖矿难度的调整</h2><p>H(block header) &lt;= target  </p>
+<p>SHA-256  2^256  </p>
+<p>挖矿难度与target成反比<br>difficulty = difficulty_1_target / target  </p>
+<p>比特币系统中规定每隔10分钟出一个区块，每隔2016个区块调整一次难度  </p>
+<p>target = target * [(actual time) / (expected time)]  </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="全节点"><a href="#全节点" class="headerlink" title="全节点"></a>全节点</h2><blockquote>
+<p>一直在线<br>在本地硬盘上维护完整的区块链信息<br>在内存中维护UTXO集合，以便快速验证交易的正确性<br>监听比特币网络上的交易信息，验证每个交易的合法性<br>决定哪些交易会被打包到区块里<br>监听别的矿工挖出来的区块，验证其合法性<br>挖矿</p>
+<ul>
+<li>决定沿着哪条链挖下去</li>
+<li>当出现等长的分叉的时候，选择哪一个分叉</li>
+</ul>
+</blockquote>
+<h2 id="轻节点"><a href="#轻节点" class="headerlink" title="轻节点"></a>轻节点</h2><blockquote>
+<p>不是一直在线<br>不用保存整个区块链，只保存每个区块的块头<br>不用保存全部交易，只保存与自己相关的交易<br>无法检验大多数交易的合法性，只能检验与自己相关的交易的合法性<br>无法检验网上发布的区块的正确性<br>可以验证挖矿的难度<br>只能检测哪个是最长链，不知道哪个是最长合法链</p>
+</blockquote>
+<h2 id="挖矿芯片："><a href="#挖矿芯片：" class="headerlink" title="挖矿芯片："></a>挖矿芯片：</h2><p>CPU -&gt; GPU -&gt; ASIC(Applicition Specific Integrated Circuit)  </p>
+<p>一种ASIC只能为一种加密货币挖矿，除非mining puzzle相同（merge mining）</p>
+<h2 id="矿池："><a href="#矿池：" class="headerlink" title="矿池："></a>矿池：</h2><p>一般有两种组织方式  </p>
+<ol>
+<li>集中式（属于同一个机构）</li>
+<li>分布式（属于不同机构）</li>
+</ol>
+<p>一个矿池可以拥有多个矿工，解决收入不稳定的问题，根据工作量进行收入分配  </p>
+<p>工作量证明： 每尝试一次nonce生成一个share（almost vaild block)  </p>
+<p>优点：  </p>
+<ul>
+<li>解决收入不稳定的问题</li>
+</ul>
+<p>缺点：<br>可能会产生51%攻击</p>
+<ul>
+<li>分叉攻击</li>
+<li>Boycott(A账户发起交易，立刻分叉)</li>
+</ul>
+<h1 id="比特币脚本"><a href="#比特币脚本" class="headerlink" title="比特币脚本"></a>比特币脚本</h1><p><img src="//bruceeezhao.github.io/2020/02/07/区块链技术与应用-比特币系统/script.png" alt="script"></p>
+<p>先执行input script再执行output script，如果过程中出现任何错误都认为交易非法。  </p>
+<p>输入输出脚本类型：</p>
+<h2 id="P2PK-Pay-to-Public-Key"><a href="#P2PK-Pay-to-Public-Key" class="headerlink" title="P2PK(Pay to Public Key)"></a>P2PK(Pay to Public Key)</h2><p><strong>input script:</strong><br>  PUSHDATA(sig)</p>
+<p><strong>output script:</strong><br>  PUSGDATA(PubKey)<br>  CHECKSIG</p>
+<hr>
+<p>脚本执行<br>PUSHDATA(sig)<br>PUSHDATA(PubKey)<br>CHECKSIG</p>
+<hr>
+<p>堆栈元素变化：<br>sig -&gt; PubKey,sig -&gt; true</p>
+<h2 id="P2PKH-Pay-to-Public-Key-Hash"><a href="#P2PKH-Pay-to-Public-Key-Hash" class="headerlink" title="P2PKH(Pay to Public Key Hash)"></a>P2PKH(Pay to Public Key Hash)</h2><p><strong>input script:</strong><br>  PUSHDATA(sig)<br>  PUSHDATA(PubKey)  </p>
+<p><strong>output</strong><br>  DUP<br>  HASH160<br>  PUSHDATA(PubKeyHash)<br>  EQUALVERIFY(比较栈顶两个哈希值是否相等)<br>  CHECKSIG  </p>
+<hr>
+<p>脚本执行<br>PUSHDATA(sig)<br>PUSHDATA(PubKey)<br>DUP<br>HASH160<br>PUSHDATA(PubKeyHash)<br>EQUALVERIFY(比较栈顶两个哈希值是否相等)<br>CHECKSIG  </p>
+<hr>
+<p>堆栈元素变化：<br>sig -&gt; pubKey,sig -&gt; pubKey,PubKey,sig -&gt; PubKeyHash,PubKey,sig -&gt; PubKeyHash,PubKeyHash,PubKey,sig -&gt; PubKey,sig -&gt; True</p>
+<h2 id="P2SH-Pay-to-Script-Hash"><a href="#P2SH-Pay-to-Script-Hash" class="headerlink" title="P2SH(Pay to Script Hash)"></a>P2SH(Pay to Script Hash)</h2><p>采用BIP16的方案：<br><strong>input script:</strong><br>  …<br>  PUSHDATA(sig)<br>  …<br>  PUSHDATA(serialized redeemScript)  </p>
+<p><strong>output scrpit:</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
+<hr>
+<p>进一步说明  </p>
+<ul>
+<li>input script 要给出一些签名（数目不定）及一段序列化的redeemScript。验证分如下两步：</li>
+</ul>
+<ol>
+<li>验证序列化的redeemScript是否与output script中的哈希值匹配</li>
+<li>反序列话并执行redeemScript，验证input script中给出的签名是否正确</li>
+</ol>
+<ul>
+<li>redeemScript 的形式</li>
+</ul>
+<ol>
+<li>P2PK</li>
+<li>P2PKH</li>
+<li>多重签名形式</li>
+</ol>
+<hr>
+<h3 id="用P2SH实现P2PK"><a href="#用P2SH实现P2PK" class="headerlink" title="用P2SH实现P2PK"></a>用P2SH实现P2PK</h3><p><strong>redeemScript:</strong><br>  PUSHDATA(PubKey)<br>  CHECKSIG  </p>
+<p><strong>input script</strong><br>  PUSHDATA(sig)<br>  PUSHDATA(serialized redeemScript)  </p>
+<p><strong>output script</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
+<p>第一阶段的验证：<br>  PUSHDATA(sig)<br>  PUSHDATA(serialized redeemScript)<br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
+<p>第二阶段的验证：<br>  PUSHDATA(PubKey)<br>  CHECKSIG  </p>
+<h3 id="多重签名"><a href="#多重签名" class="headerlink" title="多重签名"></a>多重签名</h3><p>例如有5个人，使用其中3个签名可以对账户进行操作<br>最早的多重签名，目前已经不推荐使用  </p>
+<p><strong>input script</strong><br>  ×               (此处的x是因为代码中的bug，向栈中压入一个空元素)<br>  PUSHDATA(Sig_1)<br>  PUSHDATA(Sig_2)<br>  …<br>  PUSHDATA(Sig_M)  </p>
+<p><strong>output script</strong><br>  M<br>  PUSHDATA(pubkey_1)<br>  PUSHDATA(pubkey_2)<br>  …<br>  PUSHDATA(pubkey_N)<br>  N<br>  CHECKMULISIG  </p>
+<h3 id="用P2SH实现多重签名"><a href="#用P2SH实现多重签名" class="headerlink" title="用P2SH实现多重签名"></a>用P2SH实现多重签名</h3><p><strong>input script:</strong><br>  ×<br>  PUSHDATA(Sig_1)<br>  PUSHDATA(Sig_2)<br>  …<br>  PUSHDATA(Sig_M)<br>  PUSHDATA(serialized RedeemScript)  </p>
+<p><strong>output script:</strong><br>  HASH160<br>  PUSHDATA(redeemScriptHash)<br>  EQUAL  </p>
+<p><strong>redeemScript:</strong><br>  M<br>  PUSHDATA(pubkey_1)<br>  PUSHDATA(pubkey_2)<br>  …<br>  PUSHDATA(pubkey_N)<br>  N<br>  CHECKMULISIG  </p>
+<hr>
+<p>脚本执行过程：  </p>
+<p>第一阶段：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FALSE </span><br><span class="line">PUSHDATA(Sig_1)  </span><br><span class="line">PUSHDATA(Sig_2)  </span><br><span class="line">PUSHDATA(seriRS)</span><br><span class="line">HASH160  </span><br><span class="line">PUSHDATA(RSH)  </span><br><span class="line">EQUAL</span><br></pre></td></tr></table></figure>
+
+<p>第二阶段：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">PUSHDATA(pubkey_1)  </span><br><span class="line">PUSHDATA(pubkey_2)  </span><br><span class="line">PUSHDATA(pubkey_3)</span><br><span class="line">3</span><br><span class="line">CHECKMULISIG</span><br></pre></td></tr></table></figure>
+
+<h2 id="Proof-of-Burn"><a href="#Proof-of-Burn" class="headerlink" title="Proof of Burn"></a>Proof of Burn</h2><ul>
+<li>output script  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RETURN </span><br><span class="line">  [zero or more ops or text]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>这种形式的output被称为：<br>  Provably Unspendable/Prunable Outputs</p>
+<ul>
+<li>脚本说明：<br>假如有一个交易的input指向这个output，不论input里的input script如何设计，执行到RETURN命令之后都会直接返回false，不会执行RETURN后面的其他指令，所以这个outpu无法再花出去，其对应的UTXO也就可以被剪枝了，无需保存。</li>
+</ul>
+<h1 id="比特币分叉-fork"><a href="#比特币分叉-fork" class="headerlink" title="比特币分叉(fork)"></a>比特币分叉(fork)</h1><p>成因：  </p>
+<ul>
+<li><p>state fork<br>挖矿时，两个矿工几乎同时发布区块，就会产生一个临时性的分叉  </p>
+<ul>
+<li>forking attack(deliberate fork)</li>
+</ul>
+</li>
+<li><p>protocal fork<br>因为使用不同版本的协议产生的分叉   </p>
+<ul>
+<li>hard fork</li>
+<li>soft fork</li>
+</ul>
+</li>
+</ul>
+<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>对比特币协议内容的分歧，例如区块的大小限制  </p>
+<p>假设新节点更新了协议，旧节点没有更新，那么新节点挖出来的区块不被旧节点认可，新节点在新分叉1上挖，旧节点在分叉2上挖，会产生永久的分叉。</p>
+<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>对比特币协议添加一些限制，使得原来合法的交易（区块）在新的协议中不合法。  </p>
+<p>假设区块大小由1M改为0.5M，新节点更新了协议，旧节点没有更新，新节点挖出的区块被老节点认可，老节点挖出的区块不被认可，会出现暂时的分叉。  </p>
+<p>实际情况：  </p>
+<ol>
+<li>给之没有用到的域添加新的含义，coinbase</li>
+<li>P2SH</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/10/rails-admin自定义行为/" rel="prev" title="rails-admin自定义行为">
+      <i class="fa fa-chevron-left"></i> rails-admin自定义行为
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#密码学哈希函数"><span class="nav-number">1.</span> <span class="nav-text">密码学哈希函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#签名："><span class="nav-number">2.</span> <span class="nav-text">签名：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number"></span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希指针"><span class="nav-number">1.</span> <span class="nav-text">哈希指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merkle-tree"><span class="nav-number">2.</span> <span class="nav-text">Merkle tree</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数字货币的问题："><span class="nav-number"></span> <span class="nav-text">数字货币的问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心化的数字货币要解决的问题："><span class="nav-number">1.</span> <span class="nav-text">去中心化的数字货币要解决的问题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consensus-in-BitCoin"><span class="nav-number">2.</span> <span class="nav-text">Consensus in BitCoin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币系统的实现"><span class="nav-number"></span> <span class="nav-text">比特币系统的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于交易的账本"><span class="nav-number">1.</span> <span class="nav-text">基于交易的账本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于账户的账本"><span class="nav-number">2.</span> <span class="nav-text">基于账户的账本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挖矿"><span class="nav-number">3.</span> <span class="nav-text">挖矿</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币网络工作原理"><span class="nav-number"></span> <span class="nav-text">比特币网络工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#比特币系统挖矿难度的调整"><span class="nav-number">1.</span> <span class="nav-text">比特币系统挖矿难度的调整</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全节点"><span class="nav-number">1.</span> <span class="nav-text">全节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻节点"><span class="nav-number">2.</span> <span class="nav-text">轻节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挖矿芯片："><span class="nav-number">3.</span> <span class="nav-text">挖矿芯片：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矿池："><span class="nav-number">4.</span> <span class="nav-text">矿池：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币脚本"><span class="nav-number"></span> <span class="nav-text">比特币脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P2PK-Pay-to-Public-Key"><span class="nav-number">1.</span> <span class="nav-text">P2PK(Pay to Public Key)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2PKH-Pay-to-Public-Key-Hash"><span class="nav-number">2.</span> <span class="nav-text">P2PKH(Pay to Public Key Hash)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2SH-Pay-to-Script-Hash"><span class="nav-number">3.</span> <span class="nav-text">P2SH(Pay to Script Hash)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用P2SH实现P2PK"><span class="nav-number">3.1.</span> <span class="nav-text">用P2SH实现P2PK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多重签名"><span class="nav-number">3.2.</span> <span class="nav-text">多重签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用P2SH实现多重签名"><span class="nav-number">3.3.</span> <span class="nav-text">用P2SH实现多重签名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proof-of-Burn"><span class="nav-number">4.</span> <span class="nav-text">Proof of Burn</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比特币分叉-fork"><span class="nav-number"></span> <span class="nav-text">比特币分叉(fork)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-fork"><span class="nav-number">1.</span> <span class="nav-text">hard fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#soft-fork"><span class="nav-number">2.</span> <span class="nav-text">soft fork</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bruce zhao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bruceEeZhao" title="GitHub → https://github.com/bruceEeZhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/bruceezhao@foxmail.com" title="E-Mail → bruceezhao@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bruce zhao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
