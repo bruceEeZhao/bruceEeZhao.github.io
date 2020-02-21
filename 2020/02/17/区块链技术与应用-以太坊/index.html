@@ -65,7 +65,14 @@
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/ghost1.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/uncle2.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/q2.png">
-<meta property="og:updated_time" content="2020-02-20T09:27:46.513Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/litecoin.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g16m.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g1g.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g1gc.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-m-c.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-mine.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-eth-full.png">
+<meta property="og:updated_time" content="2020-02-21T08:36:05.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="区块链技术与应用-以太坊">
 <meta name="twitter:description" content="概述以太坊中的出块时间缩短为十几秒，设计了基于gost的协议。以太坊中的mining puzzle是memory hard的，限制了ASIC的使用（ASIC resistance）。">
@@ -229,7 +236,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-20 17:27:46" itemprop="dateModified" datetime="2020-02-20T17:27:46+08:00">2020-02-20</time>
+                <time title="Modified: 2020-02-21 16:36:05" itemprop="dateModified" datetime="2020-02-21T16:36:05+08:00">2020-02-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -350,6 +357,41 @@
 <li><p>如果分叉之后还跟着一串该怎么办？<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/q2.png" alt="q2"><br>如果每个都给奖励，会降低分叉攻击的成本。以太坊中规定只给第一个区块奖励。</p>
 </li>
 </ol>
+<h1 id="挖矿算法"><a href="#挖矿算法" class="headerlink" title="挖矿算法"></a>挖矿算法</h1><p>挖矿是保证区块链安全的一个重要保障，所以我们可以说block chain is secured by mining.  </p>
+<p>但是比特币的挖矿算法后来出现了ASIC芯片，使得具有强算力的设备在挖矿上有更大的优势，这与去中心化的思想是背道而驰的。（只能专业的机器，普通的计算设备不能参与挖矿）  </p>
+<p>后来出现的加密货币的挖矿算法在设计的时候尽量降低对于ASIC的依赖，增加对内存的需求，即</p>
+<blockquote>
+<p>ASIC resistance<br>memory hard mining puzzle  </p>
+</blockquote>
+<p>LiteCoin 就是基于这种思想的加密货币</p>
+<h2 id="LiteCoin"><a href="#LiteCoin" class="headerlink" title="LiteCoin"></a>LiteCoin</h2><p>使用基于scrypt的mining puzzle   </p>
+<p><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/litecoin.png" alt="litecoin"></p>
+<p>开设一个很大的数组，按照顺序填充一些伪随机数，使用seed填充第一个值，后一个值是有前一个值取哈希得到的。<br>求解puzzle时，读取A位置的数，根据他的取值算出下一个读取的位置，比如是B，以此类推。  </p>
+<p>问题：</p>
+<ul>
+<li>对于轻节点不友好，验证和求解需要同样的内存</li>
+</ul>
+<p>实际上litecoin的内存只有128k</p>
+<h2 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h2><p>以太坊使用memory hard的挖矿算法。</p>
+<ul>
+<li>有两个数据集，小数据集16M cache，大数据集1G dataset(DAG)。大数据集是从小数据集中生成出来的。</li>
+<li>小数据集是轻节点保存的</li>
+<li>大数据集是挖矿节点使用的</li>
+<li>这两个数据集是不断增大的</li>
+</ul>
+<h3 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h3><p>生成小数据集：<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g16m.png" alt="code-16m"></p>
+<p>生成大数据集：<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g1g.png" alt="code-1g"><br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-g1gc.png" alt="code-1gc"></p>
+<p>挖矿/验证函数：<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-m-c.png" alt="code-mining-check"></p>
+<p>挖矿函数：<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-mine.png" alt="code-mine"></p>
+<p>全部函数：<br><img src="//bruceeezhao.github.io/2020/02/17/区块链技术与应用-以太坊/code-eth-full.png" alt="code-eth"></p>
+<h2 id="几点说明"><a href="#几点说明" class="headerlink" title="几点说明"></a>几点说明</h2><ol>
+<li><p><strong>以太坊实际上只有gpu挖矿，没有出现ASIC矿机，从这一点上讲是比较成功的。</strong>  </p>
+</li>
+<li><p>以太坊构思从工作量证明转向权益证明，即POW-&gt;POS，但至今没有转变。  </p>
+</li>
+<li><p>以太坊中使用了预挖矿（pre-mining)的过程，所谓预挖矿是指预留一些以太币给开发者。</p>
+</li>
+</ol>
 
     </div>
 
@@ -413,7 +455,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以太坊账户"><span class="nav-number">2.</span> <span class="nav-text">以太坊账户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态树"><span class="nav-number">3.</span> <span class="nav-text">状态树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#trie-字典树"><span class="nav-number">3.1.</span> <span class="nav-text">trie(字典树)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Patricia-trie-tree"><span class="nav-number">3.2.</span> <span class="nav-text">Patricia trie(tree)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPT-Merkle-Patricia-tree"><span class="nav-number">3.3.</span> <span class="nav-text">MPT(Merkle Patricia tree)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交易树和收据树"><span class="nav-number">4.</span> <span class="nav-text">交易树和收据树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bloom-filter"><span class="nav-number">4.1.</span> <span class="nav-text">bloom filter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GHOST-协议"><span class="nav-number">5.</span> <span class="nav-text">GHOST 协议</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以太坊账户"><span class="nav-number">2.</span> <span class="nav-text">以太坊账户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态树"><span class="nav-number">3.</span> <span class="nav-text">状态树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#trie-字典树"><span class="nav-number">3.1.</span> <span class="nav-text">trie(字典树)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Patricia-trie-tree"><span class="nav-number">3.2.</span> <span class="nav-text">Patricia trie(tree)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPT-Merkle-Patricia-tree"><span class="nav-number">3.3.</span> <span class="nav-text">MPT(Merkle Patricia tree)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交易树和收据树"><span class="nav-number">4.</span> <span class="nav-text">交易树和收据树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bloom-filter"><span class="nav-number">4.1.</span> <span class="nav-text">bloom filter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GHOST-协议"><span class="nav-number">5.</span> <span class="nav-text">GHOST 协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挖矿算法"><span class="nav-number">6.</span> <span class="nav-text">挖矿算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LiteCoin"><span class="nav-number">6.1.</span> <span class="nav-text">LiteCoin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以太坊"><span class="nav-number">6.2.</span> <span class="nav-text">以太坊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#伪代码"><span class="nav-number">6.2.1.</span> <span class="nav-text">伪代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几点说明"><span class="nav-number">6.3.</span> <span class="nav-text">几点说明</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
