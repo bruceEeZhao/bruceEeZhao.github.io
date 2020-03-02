@@ -73,7 +73,17 @@
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/clock1.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/clock2.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/operatortree.png">
-<meta property="og:updated_time" content="2020-02-26T14:06:44.717Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-io.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e2.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/hash-join.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/hash-loop-q1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/grace-hash-join.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/grace-hash-join-x.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/sort-merge-io.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/query-optimization.png">
+<meta property="og:updated_time" content="2020-03-02T02:51:47.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据系统">
 <meta name="twitter:description" content="1. 背景1.1. 大数据概念">
@@ -237,7 +247,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-26 22:06:44" itemprop="dateModified" datetime="2020-02-26T22:06:44+08:00">2020-02-26</time>
+                <time title="Modified: 2020-03-02 10:51:47" itemprop="dateModified" datetime="2020-03-02T10:51:47+08:00">2020-03-02</time>
               </span>
 
           
@@ -529,6 +539,35 @@
 <li>Hashing</li>
 <li>Sorting</li>
 </ul>
+<ol>
+<li><p>Nested loop<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e1.png" alt="nest"><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-io.png" alt="nest-io"><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e1.png" alt="nest-e1"><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/nested-loop-join-e2.png" alt="nest-e2"></p>
+</li>
+<li><p>Hashing<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/hash-join.png" alt="hash"><br>如果遇到R比内存大应该怎么办？<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/hash-loop-q1.png" alt="hash-q1"></p>
+</li>
+</ol>
+<ul>
+<li>GRACE Hash join<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/grace-hash-join.png" alt="grace"><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/grace-hash-join-x.png" alt="grace-io"></li>
+</ul>
+<ol start="3">
+<li>sort merge join</li>
+</ol>
+<ul>
+<li>思路：<ul>
+<li>如果把R按照R.a的顺序排序</li>
+<li>如果把S按照S.b的顺序排序</li>
+<li>那么可以Merge（归并）找出所有的匹配</li>
+</ul>
+</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/sort-merge-io.png" alt="sort-io"></p>
+<ul>
+<li>比较：<ul>
+<li>通常代价比Hash Join稍差</li>
+<li>当一个表已经有序的情况下，会被使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-6-Query-Optimization（查询优化）"><a href="#2-6-Query-Optimization（查询优化）" class="headerlink" title="2.6 Query Optimization（查询优化）"></a>2.6 Query Optimization（查询优化）</h2><p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/query-optimization.png" alt="query"></p>
 
     </div>
 
@@ -588,7 +627,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-大数据概念"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 大数据概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-大数据管理系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 大数据管理系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关系型数据管理系统"><span class="nav-number">2.</span> <span class="nav-text">2. 关系型数据管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-关系型数据模型"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 关系型数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-概念"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-1-Schema-vs-Instance"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">2.1.1.1. Schema vs. Instance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-2-Key"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2.1.1.2. Key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-主要关系运算"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 主要关系运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SQL-Selcet"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. SQL Selcet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-数据库系统架构"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 数据库系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-数据存储与访问"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 数据存储与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-数据表（table）"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 数据表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-索引（index）"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 索引（index）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-缓冲池（buffer-pool）"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 缓冲池（buffer pool）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-1-缓存替换算法"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">2.4.3.1 缓存替换算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-运算的实现"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 运算的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-Operator-tree"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1. Operator tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-Selection-amp-Projection"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2. Selection &amp; Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-Join"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3. Join</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-大数据概念"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 大数据概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-大数据管理系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 大数据管理系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关系型数据管理系统"><span class="nav-number">2.</span> <span class="nav-text">2. 关系型数据管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-关系型数据模型"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 关系型数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-概念"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-1-Schema-vs-Instance"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">2.1.1.1. Schema vs. Instance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-2-Key"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2.1.1.2. Key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-主要关系运算"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 主要关系运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SQL-Selcet"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. SQL Selcet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-数据库系统架构"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 数据库系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-数据存储与访问"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 数据存储与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-数据表（table）"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 数据表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-索引（index）"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 索引（index）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-缓冲池（buffer-pool）"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 缓冲池（buffer pool）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-1-缓存替换算法"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">2.4.3.1 缓存替换算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-运算的实现"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 运算的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-Operator-tree"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1. Operator tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-Selection-amp-Projection"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2. Selection &amp; Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-Join"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3. Join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-Query-Optimization（查询优化）"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 Query Optimization（查询优化）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
