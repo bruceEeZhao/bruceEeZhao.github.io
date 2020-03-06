@@ -83,7 +83,15 @@
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/grace-hash-join-x.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/sort-merge-io.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/query-optimization.png">
-<meta property="og:updated_time" content="2020-03-02T02:51:47.663Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-2.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-3.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/snapshot-isolation.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/snapshot-special.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/shared-nothing.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/2-phase-commit-1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/02/19/大数据系统/2-phase-commit-2.png">
+<meta property="og:updated_time" content="2020-03-06T11:20:53.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据系统">
 <meta name="twitter:description" content="1. 背景1.1. 大数据概念">
@@ -247,7 +255,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-02 10:51:47" itemprop="dateModified" datetime="2020-03-02T10:51:47+08:00">2020-03-02</time>
+                <time title="Modified: 2020-03-06 19:20:53" itemprop="dateModified" datetime="2020-03-06T19:20:53+08:00">2020-03-06</time>
               </span>
 
           
@@ -567,7 +575,367 @@
 </ul>
 </li>
 </ul>
-<h2 id="2-6-Query-Optimization（查询优化）"><a href="#2-6-Query-Optimization（查询优化）" class="headerlink" title="2.6 Query Optimization（查询优化）"></a>2.6 Query Optimization（查询优化）</h2><p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/query-optimization.png" alt="query"></p>
+<h2 id="2-6-Query-Optimization（查询优化）"><a href="#2-6-Query-Optimization（查询优化）" class="headerlink" title="2.6. Query Optimization（查询优化）"></a>2.6. Query Optimization（查询优化）</h2><p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/query-optimization.png" alt="query"></p>
+<h2 id="2-7-事务处理-Transaction-Processing"><a href="#2-7-事务处理-Transaction-Processing" class="headerlink" title="2.7. 事务处理(Transaction Processing)"></a>2.7. 事务处理(Transaction Processing)</h2><p>大量并发用户，少量随机读写操作</p>
+<ul>
+<li>一个事务可能包含多个操作<ul>
+<li>select</li>
+<li>insert/delete/update</li>
+<li>等</li>
+</ul>
+</li>
+<li>事务中的所有操作满足ACID性质</li>
+</ul>
+<p>事务的表现形式：</p>
+<ol>
+<li>没有特殊设置<br>那么每个SQL语句被认为是一个事务</li>
+<li>使用特殊的语句</li>
+</ol>
+<ul>
+<li>开始transaction</li>
+<li>成功结束transaction</li>
+<li>异常结束transaction</li>
+</ul>
+<h3 id="2-7-1-ACID"><a href="#2-7-1-ACID" class="headerlink" title="2.7.1. ACID"></a>2.7.1. ACID</h3><ul>
+<li>Atomicity（原子性）<ul>
+<li>all or nothing</li>
+<li>要么完全执行，要么完全没有执行</li>
+</ul>
+</li>
+<li>Consistency（一致性）<ul>
+<li>从一个正确状态转换到另一个正确状态（正确指：constraints, triggers等）</li>
+</ul>
+</li>
+<li>Isolation（隔离性）<ul>
+<li>每个事务与其它并发事务互不影响</li>
+</ul>
+</li>
+<li>Durability（持久性）<ul>
+<li>Transaction commit后，结果持久有效，crash也不消失</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-7-2-Concurrency-Control-并发控制后"><a href="#2-7-2-Concurrency-Control-并发控制后" class="headerlink" title="2.7.2. Concurrency Control(并发控制后)"></a>2.7.2. Concurrency Control(并发控制后)</h3><h4 id="2-7-2-1-数据冲突引起的问题："><a href="#2-7-2-1-数据冲突引起的问题：" class="headerlink" title="2.7.2.1. 数据冲突引起的问题："></a>2.7.2.1. 数据冲突引起的问题：</h4><ul>
+<li>Read uncommitted data (读脏数据) (写读)<ul>
+<li>在T2 commit之前，T1读了T2已经修改了的数据</li>
+</ul>
+</li>
+<li>Unrepeatable reads(不可重复读) (读写)<ul>
+<li>在T2 commit之前，T1写了T2已经读的数据</li>
+<li>如果T2再次读同一个数据，那么将发现不同的值</li>
+</ul>
+</li>
+<li>Overwrite uncommitted data (更新丢失) (写写)<ul>
+<li>在T2 commit之前，T1重写了T2已经修改了的数据</li>
+</ul>
+</li>
+</ul>
+<p><strong>两大类解决方案：</strong>  </p>
+<ul>
+<li><p>Pessimistic (悲观)</p>
+<ul>
+<li>假设：数据竞争可能经常出现</li>
+<li>防止：采用某种机制保证数据竞争不会出现 – 如果一个Transaction T1可能和正在运行的其它Transaction有冲突，那么就让这个T1等待，一直等到有冲突的其它所有Transaction都完成为止，才开始执行。</li>
+</ul>
+</li>
+<li><p>Optimistic (乐观)</p>
+<ul>
+<li>假设：数据竞争很少见</li>
+<li>检查：先执行，在提交前检查是否没有数据竞争 <ul>
+<li>允许所有Transaction都直接执行 </li>
+<li>但是Transaction不直接修改数据，而是把修改保留起来 </li>
+<li>当Transaction结束时，检查这些修改是否有数据竞争<ul>
+<li>没有竞争，成功结束，真正修改数据</li>
+<li>有竞争，丢弃结果，重新计算</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-7-2-2-悲观解决方案"><a href="#2-7-2-2-悲观解决方案" class="headerlink" title="2.7.2.2. 悲观解决方案"></a>2.7.2.2. 悲观解决方案</h4><p><strong>Pessimistic: 加锁</strong></p>
+<ul>
+<li>使用加锁协议来实现</li>
+<li>对于每个事务中的SQL语句，数据库系统自动检测其中的读、写的数据</li>
+<li>对事务中的读写数据进行加锁</li>
+<li>通常采用两阶段加锁（2 Phase Locking）</li>
+</ul>
+<p><strong>2 Phase Locking</strong></p>
+<ul>
+<li>Pessimistic concurrency control</li>
+<li>对每个访问的数据都要加锁后才能访问</li>
+<li>算法如下<ul>
+<li>在Transaction开始时，对每个需要访问的数据加锁 – 如果不能加锁，就等待，直到加锁成功</li>
+<li>执行Transaction的内容</li>
+<li>在Transaction commit前，集中进行解锁</li>
+<li>Commit</li>
+</ul>
+</li>
+<li>有一个集中的加锁阶段和一个集中的解锁阶段<ul>
+<li>由此得名</li>
+</ul>
+</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-1.png" alt="lock-1"></p>
+<p><strong>实现细节2： Lock Granularity</strong>  </p>
+<ul>
+<li>锁的粒度是不同的<ul>
+<li>Table?</li>
+<li>Record?</li>
+<li>Index?</li>
+<li>Leaf node?</li>
+</ul>
+</li>
+<li>Intent locks<ul>
+<li>IS(a)：将对a下面更细粒度的数据元素进行读</li>
+<li>IX(a)：将对a下面更细粒度的数据元素进行写</li>
+</ul>
+</li>
+<li>为了得到S,IS: 所有祖先必须为IS或IX</li>
+<li>为了得到X,IX: 所有祖先必须为IX</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-2.png" alt="lock-2"></p>
+<p><strong>实现细节3： deadlock</strong><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/lock-achive-3.png" alt="lock-3"></p>
+<p><strong>如何解决deadlock问题？</strong>  </p>
+<ul>
+<li><p>死锁避免</p>
+<ul>
+<li>规定lock对象的顺序</li>
+<li>按照顺序请求lock</li>
+<li>适用于lock对象少的情况</li>
+</ul>
+</li>
+<li><p>数据库的lock对象很多，不适合死锁避免</p>
+</li>
+<li><p>死锁检测</p>
+<ul>
+<li>周期地对长期等待的Transactions检查是否有circular wait</li>
+<li>如果有，那么就选择环上其中一Transaction abort</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-7-2-3-乐观的并发控制：不采用加锁"><a href="#2-7-2-3-乐观的并发控制：不采用加锁" class="headerlink" title="2.7.2.3. 乐观的并发控制：不采用加锁"></a>2.7.2.3. 乐观的并发控制：不采用加锁</h4><ul>
+<li>事务执行分为三个阶段<ul>
+<li>读：事务开始执行，读数据到私有工作区，并在私有工作区上完成事务的处理请求，完成修改操作</li>
+<li>验证：如果事务决定提交，检查事务是否与其它事务冲突 – 如果存在冲突，那么终止事务，清空私有工作区 – 重试事务</li>
+<li>写：验证通过，没有发现冲突，那么把私有工作区的修改<br>复制到数据库公共数据中</li>
+</ul>
+</li>
+<li>优点：当冲突很少时，没有加锁的开销</li>
+<li>缺点：当冲突很多时，可能不断地重试，浪费大量资源，甚至无法前进</li>
+</ul>
+<p><strong>另一种并发控制方法:Snapshot Isolation</strong>  </p>
+<ul>
+<li>一种Optimistic concurrency control</li>
+<li>Snapshot: 一个时点的数据库数据状态</li>
+<li>Transaction<ul>
+<li>在起始时点的snapshot</li>
+<li>读：这个snapshot的数据</li>
+<li>写：先临时保存起来，在commit时检查有无冲突，有冲突就abort<ul>
+<li>First writer wins</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/snapshot-isolation.png" alt="snapshot"><br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/snapshot-special.png" alt="snapshot-s"></p>
+<h3 id="2-7-3-Crash-Recovery-崩溃恢复"><a href="#2-7-3-Crash-Recovery-崩溃恢复" class="headerlink" title="2.7.3. Crash Recovery(崩溃恢复)"></a>2.7.3. Crash Recovery(崩溃恢复)</h3><h4 id="2-7-3-1-Durability-持久性-如何实现？"><a href="#2-7-3-1-Durability-持久性-如何实现？" class="headerlink" title="2.7.3.1. Durability (持久性) 如何实现？"></a>2.7.3.1. Durability (持久性) 如何实现？</h4><ul>
+<li>Transaction commit后，结果持久有效，crash不消失</li>
+<li>想法一<ul>
+<li>在transaction commit时，把所有的修改都写回硬盘</li>
+<li>只有当写硬盘完成后，才commit</li>
+</ul>
+</li>
+<li>有什么问题？<ul>
+<li>正确性问题：如果写多个page，中间掉电，怎么办？<br>Atomicity被破坏了！</li>
+<li>性能问题：随机写硬盘，等待写完成</li>
+</ul>
+</li>
+</ul>
+<p>解决方案：WAL (Write Ahead Logging)</p>
+<ul>
+<li>什么是Logging</li>
+<li>什么是Write-Ahead<ul>
+<li>Logging 总是先于实际的操作</li>
+<li>Logging 相当于意向，先记录意向，然后再实际操作</li>
+</ul>
+</li>
+<li>怎样保证Durability</li>
+<li>怎么实现Write-Ahead Logging</li>
+<li>Crash Recovery</li>
+</ul>
+<p><strong>Checkpoint:</strong>  </p>
+<ul>
+<li>为什么要用checkpoint?<ul>
+<li>为了使崩溃恢复的时间可控</li>
+<li>如果没有checkpoint，可能需要读整个日志，redo/undo很多工作</li>
+</ul>
+</li>
+<li>定期执行checkpoint</li>
+<li>checkpoint的内容<ul>
+<li>当前活动的事务表：包括事务的最新日志的LSN</li>
+<li>当前脏页表：每个页最早的尚未写回硬盘的LSN</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-7-3-2-崩溃恢复"><a href="#2-7-3-2-崩溃恢复" class="headerlink" title="2.7.3.2. 崩溃恢复"></a>2.7.3.2. 崩溃恢复</h4><ol>
+<li>分析阶段</li>
+</ol>
+<ul>
+<li>找到最后一个检查点<ul>
+<li>检查点的位置记录在硬盘上一个特定文件中</li>
+<li>读这个文件，可以得知最后一个检查点的位置</li>
+</ul>
+</li>
+<li>找到日志崩溃点<ul>
+<li>如果是掉电等故障，必须找到日志的崩溃点</li>
+<li>当日志是循环写时，需要从检查点扫描日志，检查每个日志页的校验码，发现校验码出错的位置，或者LSN变小的位置</li>
+</ul>
+</li>
+<li>确定崩溃时的活跃事务和脏页<ul>
+<li>最后一个检查点时的活跃事务表和脏页表</li>
+<li>正向扫描日志，遇到commit, rollback, begin更新事务表 – 同时记录每个活动事务的最新LSN</li>
+<li>遇到写更新脏页表 – 同时记录每个页的最早尚未写回硬盘的LSN</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>Redo阶段</li>
+</ol>
+<ul>
+<li>目标：把系统恢复到崩溃前瞬间的状态</li>
+<li>找到所有脏页的最早的LSN</li>
+<li>从这个LSN向日志尾正向读日志<ul>
+<li>Redo每个日志修改记录</li>
+</ul>
+</li>
+<li>对于一个日志记录<ul>
+<li>如果其涉及的页不在脏页表中，那么跳过</li>
+<li>如果数据页的LSN&gt;=日志的LSN，那么跳过 – 数据页已经包含了这个修改</li>
+<li>其它情况，修改数据页</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Undo阶段</li>
+</ol>
+<ul>
+<li>目标：清除未提交的事务的修改</li>
+<li>对于所有在崩溃时活跃的事务<ul>
+<li>找到这个事务最新的LSN</li>
+<li>通过反向链表，读这个事务的所有日志记录</li>
+</ul>
+</li>
+<li>undo所有未提交事务的修改<ul>
+<li>Undo时，比较数据页的LSN和日志的LSN</li>
+<li>if (数据页LSN&gt;=日志LSN) 时，才进行undo</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-8-数据仓库"><a href="#2-8-数据仓库" class="headerlink" title="2.8. 数据仓库"></a>2.8. 数据仓库</h2><h3 id="2-8-1-OLAP"><a href="#2-8-1-OLAP" class="headerlink" title="2.8.1. OLAP"></a>2.8.1. OLAP</h3><h3 id="2-8-2-行式与列式数据库"><a href="#2-8-2-行式与列式数据库" class="headerlink" title="2.8.2. 行式与列式数据库"></a>2.8.2. 行式与列式数据库</h3><p>列式存储：</p>
+<ul>
+<li>数据仓库的分析查询<ul>
+<li>大部分情况只涉及一个表的少数几列</li>
+<li>会读一大部分记录</li>
+</ul>
+</li>
+<li>在这种情况下，行式存储需要读很多无用的数据</li>
+<li>采用列式存储可以降低读的数据量</li>
+</ul>
+<p>列式存储的压缩</p>
+<ul>
+<li>每个文件存储相同数据类型的值</li>
+<li>数据更容易被压缩</li>
+<li>比行式存储有更高的压缩比</li>
+</ul>
+<p>列式存储的问题</p>
+<ul>
+<li>如果用到了一个表的多个列</li>
+<li>太多列拼装在一起，付出拼装代价很大</li>
+</ul>
+<h2 id="2-9-分布式数据库"><a href="#2-9-分布式数据库" class="headerlink" title="2.9. 分布式数据库"></a>2.9. 分布式数据库</h2><h3 id="2-9-1-系统架构"><a href="#2-9-1-系统架构" class="headerlink" title="2.9.1. 系统架构"></a>2.9.1. 系统架构</h3><p>三种架构</p>
+<ul>
+<li>Shared memory<ul>
+<li>多芯片、多核</li>
+<li>或Distributed shared memory</li>
+</ul>
+</li>
+<li>Shared disk<ul>
+<li>多机连接相同的数据存储设备</li>
+</ul>
+</li>
+<li>Shared nothing<ul>
+<li>普通意义上的机群系统</li>
+<li>由以太网连接多台服务器<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/shared-nothing.png" alt="shared-nothing"></li>
+</ul>
+</li>
+</ul>
+<p>关键技术</p>
+<ul>
+<li><p>Partitioning（划分）</p>
+<ul>
+<li>把数据分布在多台服务器上</li>
+<li>通常采用Horizontal partitioning – 把不同的记录分布在不同的服务器上</li>
+</ul>
+</li>
+<li><p>Replication（备份）</p>
+<ul>
+<li>为了提高可靠性</li>
+<li>对性能的影响 <ul>
+<li>读？可能提高并行性 </li>
+<li>写？额外代价</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Hash partitioning</p>
+<ul>
+<li>类似GRACE: machine ID = hash(key) % MachineNumber</li>
+</ul>
+</li>
+<li><p>Range partitioning</p>
+<ul>
+<li>每台服务器负责一个key的区间，所有区间都不重叠</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-9-2-分布式查询处理"><a href="#2-9-2-分布式查询处理" class="headerlink" title="2.9.2. 分布式查询处理"></a>2.9.2. 分布式查询处理</h3><h3 id="2-9-3-分布式事务处理"><a href="#2-9-3-分布式事务处理" class="headerlink" title="2.9.3. 分布式事务处理"></a>2.9.3. 分布式事务处理</h3><h4 id="2-9-3-1-2-Phase-Commit"><a href="#2-9-3-1-2-Phase-Commit" class="headerlink" title="2.9.3.1. 2 Phase Commit"></a>2.9.3.1. 2 Phase Commit</h4><ul>
+<li>Participant: 完成分布式事务的部分读写操作</li>
+<li>Coordinator: 协调分布式事务的进行</li>
+</ul>
+<ol>
+<li>phase 1 (voting)<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/2-phase-commit-1.png" alt="2-phase-commit-1"></li>
+</ol>
+<ul>
+<li>Coordinator向每个participant发送query to commit消息</li>
+<li>每个participant根据本地情况回答yes 或 no</li>
+</ul>
+<ol start="2">
+<li>phase 2 (completion)<br><img src="//bruceeezhao.github.io/2020/02/19/大数据系统/2-phase-commit-2.png" alt="2-phase-commit-2"></li>
+</ol>
+<ul>
+<li><p>当所有的回答都是yes, transaction 将commit</p>
+</li>
+<li><p>Coordinator向每个participant发送commit消息</p>
+</li>
+<li><p>Participant 回答acknowledgment</p>
+</li>
+<li><p>当至少一个的回答是no, transaction 将abort</p>
+</li>
+<li><p>Coordinator向每个participant发送abort消息</p>
+</li>
+<li><p>Participant 回答acknowledgment</p>
+</li>
+</ul>
+<h4 id="2-9-3-2-崩溃恢复"><a href="#2-9-3-2-崩溃恢复" class="headerlink" title="2.9.3.2. 崩溃恢复"></a>2.9.3.2. 崩溃恢复</h4><ul>
+<li>恢复时日志中可能有下述情况<ul>
+<li>有commit或abort记录：那么分布式事务处理结果已经收到，进行相应的本地commit或abort</li>
+<li>有prepare，而没有commit/abort：那么分布式事务的处理结果未知，需要和prepare记录中的coordinator进行联系</li>
+<li>没有prepare/commit/abort：那么本地abort</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -627,7 +995,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-大数据概念"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 大数据概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-大数据管理系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 大数据管理系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关系型数据管理系统"><span class="nav-number">2.</span> <span class="nav-text">2. 关系型数据管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-关系型数据模型"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 关系型数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-概念"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-1-Schema-vs-Instance"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">2.1.1.1. Schema vs. Instance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-2-Key"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2.1.1.2. Key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-主要关系运算"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 主要关系运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SQL-Selcet"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. SQL Selcet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-数据库系统架构"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 数据库系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-数据存储与访问"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 数据存储与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-数据表（table）"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 数据表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-索引（index）"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 索引（index）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-缓冲池（buffer-pool）"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 缓冲池（buffer pool）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-1-缓存替换算法"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">2.4.3.1 缓存替换算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-运算的实现"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 运算的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-Operator-tree"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1. Operator tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-Selection-amp-Projection"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2. Selection &amp; Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-Join"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3. Join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-Query-Optimization（查询优化）"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 Query Optimization（查询优化）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-大数据概念"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 大数据概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-大数据管理系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 大数据管理系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关系型数据管理系统"><span class="nav-number">2.</span> <span class="nav-text">2. 关系型数据管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-关系型数据模型"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 关系型数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-概念"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-1-Schema-vs-Instance"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">2.1.1.1. Schema vs. Instance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-2-Key"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2.1.1.2. Key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-主要关系运算"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 主要关系运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SQL-Selcet"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. SQL Selcet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-数据库系统架构"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 数据库系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-数据存储与访问"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 数据存储与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-数据表（table）"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 数据表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-索引（index）"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 索引（index）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-缓冲池（buffer-pool）"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 缓冲池（buffer pool）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-1-缓存替换算法"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">2.4.3.1 缓存替换算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-运算的实现"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 运算的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-Operator-tree"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1. Operator tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-Selection-amp-Projection"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2. Selection &amp; Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-Join"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3. Join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-Query-Optimization（查询优化）"><span class="nav-number">2.6.</span> <span class="nav-text">2.6. Query Optimization（查询优化）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-事务处理-Transaction-Processing"><span class="nav-number">2.7.</span> <span class="nav-text">2.7. 事务处理(Transaction Processing)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-1-ACID"><span class="nav-number">2.7.1.</span> <span class="nav-text">2.7.1. ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-2-Concurrency-Control-并发控制后"><span class="nav-number">2.7.2.</span> <span class="nav-text">2.7.2. Concurrency Control(并发控制后)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2-1-数据冲突引起的问题："><span class="nav-number">2.7.2.1.</span> <span class="nav-text">2.7.2.1. 数据冲突引起的问题：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2-2-悲观解决方案"><span class="nav-number">2.7.2.2.</span> <span class="nav-text">2.7.2.2. 悲观解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2-3-乐观的并发控制：不采用加锁"><span class="nav-number">2.7.2.3.</span> <span class="nav-text">2.7.2.3. 乐观的并发控制：不采用加锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-3-Crash-Recovery-崩溃恢复"><span class="nav-number">2.7.3.</span> <span class="nav-text">2.7.3. Crash Recovery(崩溃恢复)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3-1-Durability-持久性-如何实现？"><span class="nav-number">2.7.3.1.</span> <span class="nav-text">2.7.3.1. Durability (持久性) 如何实现？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3-2-崩溃恢复"><span class="nav-number">2.7.3.2.</span> <span class="nav-text">2.7.3.2. 崩溃恢复</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-数据仓库"><span class="nav-number">2.8.</span> <span class="nav-text">2.8. 数据仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-1-OLAP"><span class="nav-number">2.8.1.</span> <span class="nav-text">2.8.1. OLAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-2-行式与列式数据库"><span class="nav-number">2.8.2.</span> <span class="nav-text">2.8.2. 行式与列式数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-分布式数据库"><span class="nav-number">2.9.</span> <span class="nav-text">2.9. 分布式数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-1-系统架构"><span class="nav-number">2.9.1.</span> <span class="nav-text">2.9.1. 系统架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-2-分布式查询处理"><span class="nav-number">2.9.2.</span> <span class="nav-text">2.9.2. 分布式查询处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-3-分布式事务处理"><span class="nav-number">2.9.3.</span> <span class="nav-text">2.9.3. 分布式事务处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-9-3-1-2-Phase-Commit"><span class="nav-number">2.9.3.1.</span> <span class="nav-text">2.9.3.1. 2 Phase Commit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-9-3-2-崩溃恢复"><span class="nav-number">2.9.3.2.</span> <span class="nav-text">2.9.3.2. 崩溃恢复</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -641,7 +1009,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
