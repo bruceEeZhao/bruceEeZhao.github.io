@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://bruceeezhao.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1. 分布式系统基本概念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据存储系统">
+<meta property="og:url" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 分布式系统基本概念">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/OSI-Internet.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/CAP.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/NFS.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/GFS-HDFS.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/POSIX-vs-HDFS.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-structure.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write2.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write3.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-wirte4.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-append.png">
+<meta property="og:updated_time" content="2020-03-11T13:28:13.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据存储系统">
+<meta name="twitter:description" content="1. 分布式系统基本概念">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/OSI-Internet.png">
+
+<link rel="canonical" href="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>大数据存储系统 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大数据存储系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-11 19:27:47 / Modified: 21:28:13" itemprop="dateCreated datePublished" datetime="2020-03-11T19:27:47+08:00">2020-03-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-分布式系统基本概念"><a href="#1-分布式系统基本概念" class="headerlink" title="1. 分布式系统基本概念"></a>1. 分布式系统基本概念</h1><a id="more"></a><h2 id="1-1-网络与协议"><a href="#1-1-网络与协议" class="headerlink" title="1.1. 网络与协议"></a>1.1. 网络与协议</h2><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/OSI-Internet.png" alt="OSI"></p>
+<h3 id="1-1-1-IP-TCP-UDP"><a href="#1-1-1-IP-TCP-UDP" class="headerlink" title="1.1.1. IP/TCP/UDP"></a>1.1.1. IP/TCP/UDP</h3><ul>
+<li>IP (Internet Protocol)<ul>
+<li>IPv4地址：例如210.76.211.7，唯一标识一台联网的机器</li>
+<li>Routing(路由)</li>
+<li>IP packet: header, data</li>
+<li>Connectionless (无连接), unordered(无序), best-effort (不保证可靠)</li>
+</ul>
+</li>
+<li>TCP (Transmission Control Protocol)<ul>
+<li>在IP基础上实现</li>
+<li>Port端口号：不同的进程/socket</li>
+<li>Reliable (可靠的), ordered (有顺序), connection-oriented (有连接),error checked (数据校验)</li>
+</ul>
+</li>
+<li>UDP (User Datagram Protocol)<ul>
+<li>在IP基础上实现</li>
+<li>Port端口号：不同的进程</li>
+<li>进行数据校验，其它与IP相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-1-2-应用层协议"><a href="#1-1-2-应用层协议" class="headerlink" title="1.1.2. 应用层协议"></a>1.1.2. 应用层协议</h3><ul>
+<li>DNS</li>
+<li>HTTP</li>
+</ul>
+<h2 id="1-2-通信方式"><a href="#1-2-通信方式" class="headerlink" title="1.2. 通信方式"></a>1.2. 通信方式</h2><h3 id="1-2-1-Process-Thread"><a href="#1-2-1-Process-Thread" class="headerlink" title="1.2.1. Process/Thread"></a>1.2.1. Process/Thread</h3><ul>
+<li>在OS内核中两者很相似</li>
+<li>Process (进程)<ul>
+<li>创建：fork</li>
+<li>私有的虚存空间</li>
+<li>私有的打开文件 (files, sockets, devices, pipes …)</li>
+</ul>
+</li>
+<li>Thread (线程)<ul>
+<li>创建：pthread_create -&gt; clone</li>
+<li>共享的虚存空间</li>
+<li>共享的打开文件</li>
+<li>一个进程中可以有多个线程</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-2-应用程序进程间的通信方式"><a href="#1-2-2-应用程序进程间的通信方式" class="headerlink" title="1.2.2. 应用程序进程间的通信方式"></a>1.2.2. 应用程序进程间的通信方式</h3><ul>
+<li>Shared memory (共享内存)<ul>
+<li>在单机上 <ul>
+<li>同一个进程内部，多个线程之间 </li>
+<li>多个进程之间，把同一块物理内存映射到多个进程的虚存空间中</li>
+</ul>
+</li>
+<li>一方修改，另一方可以立即看到</li>
+<li>需要并发控制</li>
+</ul>
+</li>
+<li>Message passing (消息传递)<ul>
+<li>单机上，多进程之间</li>
+<li>多机之间</li>
+<li>例如：socket (TCP/UDP)，pipe等</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-3-分布式系统类型，故障类型，CAP"><a href="#1-3-分布式系统类型，故障类型，CAP" class="headerlink" title="1.3. 分布式系统类型，故障类型，CAP"></a>1.3. 分布式系统类型，故障类型，CAP</h2><h3 id="1-3-1-分布式系统类型"><a href="#1-3-1-分布式系统类型" class="headerlink" title="1.3.1. 分布式系统类型"></a>1.3.1. 分布式系统类型</h3><ul>
+<li>Client / Server<ul>
+<li>客户端发送请求，服务器完成操作，发回响应</li>
+<li>例如：3-tier web architecture<ul>
+<li>Presentation: web server</li>
+<li>Business Logic: application server</li>
+<li>Data: database server</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>P2P (Peer-to-peer)<ul>
+<li>分布式系统中每个节点都执行相似的功能</li>
+<li>整个系统功能完全是分布式完成的</li>
+<li>没有中心控制节点</li>
+</ul>
+</li>
+<li>Master / workers<ul>
+<li>有一个/一组节点为主，进行中心控制协调</li>
+<li>其它多个节点为workers，完成具体工作</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-2-故障模型-Failure-Model"><a href="#1-3-2-故障模型-Failure-Model" class="headerlink" title="1.3.2. 故障模型(Failure Model)"></a>1.3.2. 故障模型(Failure Model)</h3><ul>
+<li>Fail stop<ul>
+<li>当出现故障时，进程停止/崩溃</li>
+</ul>
+</li>
+<li>Fail slow<ul>
+<li>当出现故障时，运行速度变得很慢</li>
+</ul>
+</li>
+<li>Byzantine failure<ul>
+<li>包含恶意攻击</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-3-CAP定理"><a href="#1-3-3-CAP定理" class="headerlink" title="1.3.3. CAP定理"></a>1.3.3. CAP定理</h3><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/CAP.png" alt="CAP"></p>
+<h1 id="2-分布式文件系统"><a href="#2-分布式文件系统" class="headerlink" title="2. 分布式文件系统"></a>2. 分布式文件系统</h1><h2 id="2-1-NFS-Sun’s-Network-File-System"><a href="#2-1-NFS-Sun’s-Network-File-System" class="headerlink" title="2.1. NFS (Sun’s Network File System)"></a>2.1. NFS (Sun’s Network File System)</h2><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/NFS.png" alt="NFS"></p>
+<h3 id="2-1-1-Stateless（无状态）"><a href="#2-1-1-Stateless（无状态）" class="headerlink" title="2.1.1. Stateless（无状态）"></a>2.1.1. Stateless（无状态）</h3><ul>
+<li>NFS Server不保持任何状态，每个操作都是无状态的</li>
+<li>NFSPROC_READ<ul>
+<li>输入参数: file handle, offset, count</li>
+<li>返回结果: data, attributes</li>
+</ul>
+</li>
+<li>NFSPROC_WRITE<ul>
+<li>输入参数: file handle, offset, count, data</li>
+<li>返回结果: attributes</li>
+</ul>
+</li>
+<li>NFSPROC_LOOKUP<ul>
+<li>输入参数: directory file handle, name of file/directory to look up</li>
+<li>返回结果: file handle</li>
+</ul>
+</li>
+<li>NFSPROC_GETATTR<ul>
+<li>输入参数: file handle</li>
+<li>返回结果: attributes</li>
+</ul>
+</li>
+<li>等等</li>
+</ul>
+<h3 id="2-1-2-Idempotent（幂等性：重复多次结果不变）"><a href="#2-1-2-Idempotent（幂等性：重复多次结果不变）" class="headerlink" title="2.1.2 Idempotent（幂等性：重复多次结果不变）"></a>2.1.2 Idempotent（幂等性：重复多次结果不变）</h3><ul>
+<li>READ操作是Idempotent<ul>
+<li>在没有其它操作前提下，重复多次结果是一样的</li>
+<li>为什么？</li>
+</ul>
+</li>
+<li>WRITE操作是Idempotent<ul>
+<li>在没有其它操作前提下，重复多次结果是一样的</li>
+<li>为什么？</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-1-3-Server-Crash-Recovery"><a href="#2-1-3-Server-Crash-Recovery" class="headerlink" title="2.1.3. Server Crash Recovery"></a>2.1.3. Server Crash Recovery</h3><ul>
+<li>NFS Server<ul>
+<li>只用重启，什么额外操作都不用</li>
+<li>因为Stateless</li>
+</ul>
+</li>
+<li>NFS Client<ul>
+<li>如果一个请求没有响应，那么就不断重试</li>
+<li>因为Idempotent</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-1-4-Cache-Consistency"><a href="#2-1-4-Cache-Consistency" class="headerlink" title="2.1.4. Cache Consistency"></a>2.1.4. Cache Consistency</h3><p>指对一个文件，并发访问冲突  </p>
+<p>NFSv2对于Cache Consistency的解决方法</p>
+<ul>
+<li>Flush-on-close (又称作close-to-open) consistency<br>-在文件关闭时，必须把缓存的已修改的文件数据，写回NFS Server</li>
+<li>每次在使用缓存的数据前，必须检查是否过时<ul>
+<li>用GETATTR请求去poll（轮询），获得最新的文件属性</li>
+<li>比较文件修改时间</li>
+</ul>
+</li>
+<li>性能问题<ul>
+<li>大量的GETATTR（即使文件只被一个client缓存）</li>
+<li>关闭文件的写回性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-AFS-Andrew-File-System"><a href="#2-2-AFS-Andrew-File-System" class="headerlink" title="2.2. AFS (Andrew File System)"></a>2.2. AFS (Andrew File System)</h2><ul>
+<li>设计目标：Scalability<ul>
+<li>一个服务器支持尽可能多的客户端</li>
+<li>解决NFS polling状态的问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-1-解决polling状态的问题"><a href="#2-2-1-解决polling状态的问题" class="headerlink" title="2.2.1. 解决polling状态的问题"></a>2.2.1. 解决polling状态的问题</h3><ul>
+<li>Invalidation<ul>
+<li>Client 获得一个文件时，在server上登记</li>
+<li>当server发现文件修改时，向已登记的client发一个callback</li>
+<li>Client收到callback，则删除缓存的文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-对比"><a href="#2-3-对比" class="headerlink" title="2.3. 对比"></a>2.3. 对比</h2><p>其它不同点：AFS vs. NFSv2</p>
+<ul>
+<li>AFS缓存整个文件<ul>
+<li>而NFS是以数据页为单位的</li>
+<li>AFS open: 将把整个文件从Server读到Client</li>
+<li>多次操作：就像本地文件一样</li>
+<li>单次对一个大文件进行随机读/写：比较慢</li>
+</ul>
+</li>
+<li>AFS缓存在本地硬盘中<ul>
+<li>而NFS的缓存是在内存中的</li>
+<li>所以AFS可以缓存大文件</li>
+</ul>
+</li>
+<li>AFS<ul>
+<li>有统一的名字空间，而NFS可以mount到任何地方</li>
+<li>有详细权限管理等</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-Google-File-System-和-HDFS"><a href="#3-Google-File-System-和-HDFS" class="headerlink" title="3. Google File System 和 HDFS"></a>3. Google File System 和 HDFS</h1><h2 id="3-1-GFS-HDFS"><a href="#3-1-GFS-HDFS" class="headerlink" title="3.1. GFS/HDFS"></a>3.1. GFS/HDFS</h2><ul>
+<li>Google File System<ul>
+<li>SOSP 2003，C/C++实现</li>
+<li>Google MapReduce系统的基础</li>
+</ul>
+</li>
+<li>Hadoop Distributed File System<ul>
+<li>Google File System的开源实现</li>
+<li>基于Java</li>
+<li>应用层的文件系统</li>
+<li>与Hadoop捆绑在一起<br><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/GFS-HDFS.png" alt="GFS/HDFS"></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-2-POSIX-v-s-HDFS"><a href="#3-2-POSIX-v-s-HDFS" class="headerlink" title="3.2. POSIX v.s. HDFS"></a>3.2. POSIX v.s. HDFS</h2><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/POSIX-vs-HDFS.png" alt="POSIX"></p>
+<h2 id="3-3-设计目标"><a href="#3-3-设计目标" class="headerlink" title="3.3. 设计目标"></a>3.3. 设计目标</h2><ul>
+<li>优化<ul>
+<li>大块数据的顺序读</li>
+<li>并行追加(append)</li>
+</ul>
+</li>
+<li>不支持<ul>
+<li>文件修改(overwrite)操作</li>
+<li>所以，consistency的实现可以大大简化！</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-4-系统架构"><a href="#3-4-系统架构" class="headerlink" title="3.4. 系统架构"></a>3.4. 系统架构</h2><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-structure.png" alt="structure"></p>
+<ul>
+<li>Name Node：存储文件的metadata(元数据)<ul>
+<li>文件名，长度，分成多少数据块，每个数据块分布在哪些Data Node上</li>
+</ul>
+</li>
+<li>Data Node: 存储数据块<ul>
+<li>文件切分成定长的数据块（默认为64MB大小的数据块）</li>
+<li>每个数据块独立地分布存储在Data Node上</li>
+<li>默认每个数据块存储3份，在3个不同的data node上<ul>
+<li>Rack-aware</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-4-1-文件操作：-open"><a href="#3-4-1-文件操作：-open" class="headerlink" title="3.4.1. 文件操作： open"></a>3.4.1. 文件操作： open</h3><ul>
+<li>打开文件时，与Name Node通信一次</li>
+<li>之后的读操作，直接与Data Node通信，绕过了Name Node</li>
+<li>可以从多个副本中选择最佳的Data Node读取数据</li>
+<li>可以支持很多并发的读请求</li>
+</ul>
+<h3 id="3-4-2-文件操作：-write"><a href="#3-4-2-文件操作：-write" class="headerlink" title="3.4.2. 文件操作： write"></a>3.4.2. 文件操作： write</h3><p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write.png" alt="write"></p>
+<ul>
+<li>Name Node决定应该写到哪些Data Nodes<ul>
+<li>Rack-aware, load balancing</li>
+<li>3个副本：本机、本机柜、其它机柜</li>
+</ul>
+</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write2.png" alt="write2"></p>
+<ul>
+<li>形成一个数据传递的pipeline<ul>
+<li>数据依次沿流水线传递到Primary和secondary data node</li>
+<li>最大限度地利用网络带宽</li>
+</ul>
+</li>
+<li>Data node 在内存中缓存数据</li>
+<li>注意：数据到此时还没有写进HDFS</li>
+</ul>
+<p><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write3.png" alt="write3"></p>
+<ul>
+<li>收到写命令时才进行真正地写操作</li>
+<li>把缓存的数据写到文件系统中</li>
+</ul>
+<p>不允许并发写操作，因为可能造成块覆盖的问题，如下图：<br><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-wirte4.png" alt="write4"></p>
+<p>支持并发apend操作，如下图：<br><img src="//bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-append.png" alt="append"></p>
+<h2 id="3-5-小结"><a href="#3-5-小结" class="headerlink" title="3.5. 小结"></a>3.5. 小结</h2><ul>
+<li>分布式文件系统</li>
+<li>很好的顺序读性能<ul>
+<li>为大块数据的顺序读优化</li>
+</ul>
+</li>
+<li>不支持并行的写操作：不需要distributed transaction</li>
+<li>支持并行的append</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/06/智能计算系统/" rel="prev" title="智能计算系统">
+      <i class="fa fa-chevron-left"></i> 智能计算系统
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-分布式系统基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 分布式系统基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-网络与协议"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 网络与协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-IP-TCP-UDP"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1. IP/TCP/UDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-应用层协议"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2. 应用层协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-通信方式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 通信方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Process-Thread"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1. Process/Thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-应用程序进程间的通信方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2. 应用程序进程间的通信方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-分布式系统类型，故障类型，CAP"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 分布式系统类型，故障类型，CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-分布式系统类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1. 分布式系统类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-故障模型-Failure-Model"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2. 故障模型(Failure Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-CAP定理"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3. CAP定理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-分布式文件系统"><span class="nav-number">2.</span> <span class="nav-text">2. 分布式文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-NFS-Sun’s-Network-File-System"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. NFS (Sun’s Network File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-Stateless（无状态）"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. Stateless（无状态）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-Idempotent（幂等性：重复多次结果不变）"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 Idempotent（幂等性：重复多次结果不变）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-Server-Crash-Recovery"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3. Server Crash Recovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-Cache-Consistency"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4. Cache Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-AFS-Andrew-File-System"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. AFS (Andrew File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-解决polling状态的问题"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 解决polling状态的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Google-File-System-和-HDFS"><span class="nav-number">3.</span> <span class="nav-text">3. Google File System 和 HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-GFS-HDFS"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. GFS/HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-POSIX-v-s-HDFS"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. POSIX v.s. HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-设计目标"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-系统架构"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-文件操作：-open"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1. 文件操作： open</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-文件操作：-write"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2. 文件操作： write</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-小结"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. 小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bruce zhao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bruceEeZhao" title="GitHub → https://github.com/bruceEeZhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/bruceezhao@foxmail.com" title="E-Mail → bruceezhao@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bruce zhao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
