@@ -54,10 +54,18 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 概述1.1. 三个流派">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-06T13:24:18.759Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/realations-tec.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/classic-process.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/fuhao.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/nerual-history.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/perceptron.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/mutil-perceptron.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/deep-learing.png">
+<meta property="og:updated_time" content="2020-03-14T13:14:29.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智能计算系统">
 <meta name="twitter:description" content="1. 概述1.1. 三个流派">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/03/06/智能计算系统/realations-tec.png">
 
 <link rel="canonical" href="https://bruceeezhao.github.io/2020/03/06/智能计算系统/">
 
@@ -209,10 +217,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-06 19:21:19 / Modified: 21:24:18" itemprop="dateCreated datePublished" datetime="2020-03-06T19:21:19+08:00">2020-03-06</time>
+              <time title="Created: 2020-03-06 19:21:19" itemprop="dateCreated datePublished" datetime="2020-03-06T19:21:19+08:00">2020-03-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-14 21:14:29" itemprop="dateModified" datetime="2020-03-14T21:14:29+08:00">2020-03-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -253,6 +267,26 @@
 <li>第一代： 1980年代，面向服好主意智能处理的专用计算机（Prolog机，LISP机）</li>
 <li>第二代： 2010年代，面向连接注意智能处理的专用计算机（深度学习计算机）</li>
 <li>第三代： 未来强人工智能/通用人工智能的载体</li>
+</ul>
+<h1 id="2-神经网络基础"><a href="#2-神经网络基础" class="headerlink" title="2. 神经网络基础"></a>2. 神经网络基础</h1><h2 id="2-1-从机器学习到神经网络"><a href="#2-1-从机器学习到神经网络" class="headerlink" title="2.1. 从机器学习到神经网络"></a>2.1. 从机器学习到神经网络</h2><p>各种技术的关系：<br><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/realations-tec.png" alt="realation"></p>
+<p>典型机器学习过程：<br><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/classic-process.png" alt="process"></p>
+<p>符号说明：<br><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/fuhao.png" alt="fuhao"></p>
+<h3 id="2-1-1-线性回归"><a href="#2-1-1-线性回归" class="headerlink" title="2.1.1. 线性回归"></a>2.1.1. 线性回归</h3><ol>
+<li><p>什么是回归（regression)<br>回归是研究一组因变量和自变量的关系。为什么叫回归？因为最初研究父母身高与子女身高的关系，发现身高会向平均身高回归。可以理解为会向平均值靠近。</p>
+</li>
+<li><p>线性回归<br>可以找到一些点的集合背后的规律：一个点集可以用一条直线来拟合，这条拟合出来的直线的参数特征，就是线性回归找到的点集背后的规律。<br>或者说：给定一个点的集合，能够通过一条曲线进行拟合，如果拟合出的线是一条直线，那就称为线性回归。</p>
+</li>
+</ol>
+<h2 id="2-2-人工神经网络"><a href="#2-2-人工神经网络" class="headerlink" title="2.2. 人工神经网络"></a>2.2. 人工神经网络</h2><p><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/nerual-history.png" alt="his"></p>
+<h3 id="2-2-1-感知机（Perceptron）模型"><a href="#2-2-1-感知机（Perceptron）模型" class="headerlink" title="2.2.1. 感知机（Perceptron）模型"></a>2.2.1. 感知机（Perceptron）模型</h3><p>超平面： 在二维空间中是一条直线，在三维空间中是一个二维平面。。。<br><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/perceptron.png" alt="per"></p>
+<h3 id="2-2-2-多层感知机"><a href="#2-2-2-多层感知机" class="headerlink" title="2.2.2. 多层感知机"></a>2.2.2. 多层感知机</h3><p><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/mutil-perceptron.png" alt="mutil"></p>
+<p>Why Not Go Deeper? Kurt Hornik证明了理论上两层神经网络足以拟合任意函数，过去也没有足够的数据和计算能力。</p>
+<h2 id="2-3-多层神经网络"><a href="#2-3-多层神经网络" class="headerlink" title="2.3. 多层神经网络"></a>2.3. 多层神经网络</h2><p><img src="//bruceeezhao.github.io/2020/03/06/智能计算系统/deep-learing.png" alt="deeplearing"></p>
+<h3 id="2-3-1-深度神经网络的成功：ABC"><a href="#2-3-1-深度神经网络的成功：ABC" class="headerlink" title="2.3.1. 深度神经网络的成功：ABC"></a>2.3.1. 深度神经网络的成功：ABC</h3><p>深度神经网络不断发展不仅依赖于自身的结构优势，也依赖于如下一些外在因素</p>
+<ul>
+<li>Algorithm：算法日新月异，优化算法层出不穷（学习算法-&gt;BP 算法-&gt; Pre-training，Dropout等方法）</li>
+<li>Big data：数据量不断增大（10-&gt; 10 k -&gt;100M）</li>
+<li>Computing：处理器计算能力的不算提升（晶体管-&gt;CPU -&gt;集群/GPU -&gt;智能处理器）</li>
 </ul>
 
     </div>
@@ -313,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-三个流派"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 三个流派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-智能计算系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 智能计算系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-三代智能计算系统"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 三代智能计算系统</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-三个流派"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 三个流派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-智能计算系统"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 智能计算系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-三代智能计算系统"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 三代智能计算系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-神经网络基础"><span class="nav-number">2.</span> <span class="nav-text">2. 神经网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-从机器学习到神经网络"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 从机器学习到神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-线性回归"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 线性回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-人工神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 人工神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-感知机（Perceptron）模型"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 感知机（Perceptron）模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-多层感知机"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2. 多层感知机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-多层神经网络"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 多层神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-深度神经网络的成功：ABC"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1. 深度神经网络的成功：ABC</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
