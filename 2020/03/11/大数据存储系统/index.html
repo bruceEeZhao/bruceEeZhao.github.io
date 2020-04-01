@@ -65,7 +65,7 @@
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-write3.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-wirte4.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/03/11/大数据存储系统/HDFS-append.png">
-<meta property="og:updated_time" content="2020-03-11T13:28:13.369Z">
+<meta property="og:updated_time" content="2020-03-30T01:46:53.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据存储系统">
 <meta name="twitter:description" content="1. 分布式系统基本概念">
@@ -221,10 +221,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-11 19:27:47 / Modified: 21:28:13" itemprop="dateCreated datePublished" datetime="2020-03-11T19:27:47+08:00">2020-03-11</time>
+              <time title="Created: 2020-03-11 19:27:47" itemprop="dateCreated datePublished" datetime="2020-03-11T19:27:47+08:00">2020-03-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-30 09:46:53" itemprop="dateModified" datetime="2020-03-30T09:46:53+08:00">2020-03-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -528,6 +534,28 @@
 <li>不支持并行的写操作：不需要distributed transaction</li>
 <li>支持并行的append</li>
 </ul>
+<h1 id="4-Key-Value-Store"><a href="#4-Key-Value-Store" class="headerlink" title="4. Key-Value Store"></a>4. Key-Value Store</h1><ul>
+<li>Dynamo</li>
+<li>Bigtable/ Hbase</li>
+<li>Cassandra</li>
+<li>RocksDB</li>
+</ul>
+<h1 id="5-Distributed-Coordination-ZooKeeper"><a href="#5-Distributed-Coordination-ZooKeeper" class="headerlink" title="5. Distributed Coordination: ZooKeeper"></a>5. Distributed Coordination: ZooKeeper</h1><h1 id="6-Document-Store"><a href="#6-Document-Store" class="headerlink" title="6. Document Store"></a>6. Document Store</h1><ul>
+<li>树状结构数据模型<ul>
+<li>JSON</li>
+<li>Google Protocol Buffers</li>
+</ul>
+</li>
+<li>MongoDB<ul>
+<li>API and Query Model</li>
+<li>Architecture<h1 id="7-图存储系统（Graph-Database）"><a href="#7-图存储系统（Graph-Database）" class="headerlink" title="7. 图存储系统（Graph Database）"></a>7. 图存储系统（Graph Database）</h1></li>
+</ul>
+</li>
+<li>图数据模型</li>
+<li>Neo4j</li>
+<li>JanusGraph</li>
+<li>RDF和Sparql</li>
+</ul>
 
     </div>
 
@@ -546,7 +574,10 @@
     <a href="/2020/03/06/智能计算系统/" rel="prev" title="智能计算系统">
       <i class="fa fa-chevron-left"></i> 智能计算系统
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/19/创新创业管理/" rel="next" title="创新创业管理">
+      创新创业管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -584,7 +615,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-分布式系统基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 分布式系统基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-网络与协议"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 网络与协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-IP-TCP-UDP"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1. IP/TCP/UDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-应用层协议"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2. 应用层协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-通信方式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 通信方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Process-Thread"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1. Process/Thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-应用程序进程间的通信方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2. 应用程序进程间的通信方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-分布式系统类型，故障类型，CAP"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 分布式系统类型，故障类型，CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-分布式系统类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1. 分布式系统类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-故障模型-Failure-Model"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2. 故障模型(Failure Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-CAP定理"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3. CAP定理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-分布式文件系统"><span class="nav-number">2.</span> <span class="nav-text">2. 分布式文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-NFS-Sun’s-Network-File-System"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. NFS (Sun’s Network File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-Stateless（无状态）"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. Stateless（无状态）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-Idempotent（幂等性：重复多次结果不变）"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 Idempotent（幂等性：重复多次结果不变）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-Server-Crash-Recovery"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3. Server Crash Recovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-Cache-Consistency"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4. Cache Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-AFS-Andrew-File-System"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. AFS (Andrew File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-解决polling状态的问题"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 解决polling状态的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Google-File-System-和-HDFS"><span class="nav-number">3.</span> <span class="nav-text">3. Google File System 和 HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-GFS-HDFS"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. GFS/HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-POSIX-v-s-HDFS"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. POSIX v.s. HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-设计目标"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-系统架构"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-文件操作：-open"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1. 文件操作： open</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-文件操作：-write"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2. 文件操作： write</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-小结"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. 小结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-分布式系统基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 分布式系统基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-网络与协议"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 网络与协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-IP-TCP-UDP"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1. IP/TCP/UDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-应用层协议"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2. 应用层协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-通信方式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 通信方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Process-Thread"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1. Process/Thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-应用程序进程间的通信方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2. 应用程序进程间的通信方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-分布式系统类型，故障类型，CAP"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 分布式系统类型，故障类型，CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-分布式系统类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1. 分布式系统类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-故障模型-Failure-Model"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2. 故障模型(Failure Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-CAP定理"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3. CAP定理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-分布式文件系统"><span class="nav-number">2.</span> <span class="nav-text">2. 分布式文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-NFS-Sun’s-Network-File-System"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. NFS (Sun’s Network File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-Stateless（无状态）"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. Stateless（无状态）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-Idempotent（幂等性：重复多次结果不变）"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 Idempotent（幂等性：重复多次结果不变）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-Server-Crash-Recovery"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3. Server Crash Recovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-Cache-Consistency"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4. Cache Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-AFS-Andrew-File-System"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. AFS (Andrew File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-解决polling状态的问题"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 解决polling状态的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Google-File-System-和-HDFS"><span class="nav-number">3.</span> <span class="nav-text">3. Google File System 和 HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-GFS-HDFS"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. GFS/HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-POSIX-v-s-HDFS"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. POSIX v.s. HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-设计目标"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-系统架构"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-文件操作：-open"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1. 文件操作： open</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-文件操作：-write"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2. 文件操作： write</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-小结"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. 小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Key-Value-Store"><span class="nav-number">4.</span> <span class="nav-text">4. Key-Value Store</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Distributed-Coordination-ZooKeeper"><span class="nav-number">5.</span> <span class="nav-text">5. Distributed Coordination: ZooKeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Document-Store"><span class="nav-number">6.</span> <span class="nav-text">6. Document Store</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-图存储系统（Graph-Database）"><span class="nav-number">7.</span> <span class="nav-text">7. 图存储系统（Graph Database）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -598,7 +629,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
