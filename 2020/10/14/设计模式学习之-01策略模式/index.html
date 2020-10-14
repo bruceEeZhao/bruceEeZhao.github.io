@@ -47,15 +47,22 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://bruceeezhao.github.io/archives/2020/02/index.html">
+  <meta name="description" content="策略模式(strategy pattern)">
+<meta name="keywords" content="设计模式,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习之---01策略模式">
+<meta property="og:url" content="https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="策略模式(strategy pattern)">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/duck1.png">
+<meta property="og:updated_time" content="2020-10-14T10:20:49.241Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="设计模式学习之---01策略模式">
+<meta name="twitter:description" content="策略模式(strategy pattern)">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/duck1.png">
 
-<link rel="canonical" href="https://bruceeezhao.github.io/archives/2020/02/">
+<link rel="canonical" href="https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/">
 
 
 <script id="page-configurations">
@@ -63,13 +70,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | Hexo</title>
+  <title>设计模式学习之---01策略模式 | Hexo</title>
   
 
 
@@ -178,149 +185,93 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 17 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          设计模式学习之---01策略模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-10-14 18:05:28 / Modified: 18:20:49" itemprop="dateCreated datePublished" datetime="2020-10-14T18:05:28+08:00">2020-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <h1 id="策略模式-strategy-pattern"><a href="#策略模式-strategy-pattern" class="headerlink" title="策略模式(strategy pattern)"></a>策略模式(strategy pattern)</h1><a id="more"></a><h2 id="问题引入"><a href="#问题引入" class="headerlink" title="问题引入"></a>问题引入</h2><p><strong>鸭子仿真程序</strong><br><img src="//bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/duck1.png" alt><br>假设有一个鸭子仿真程序，Duck类是一个抽象类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-25T16:03:50+08:00"
-              content="2020-02-25">
-          02-25
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/25/创业基础-2-如何创业/" itemprop="url">
-            <span itemprop="name">创业基础-2.如何创业</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-19T21:13:57+08:00"
-              content="2020-02-19">
-          02-19
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/19/大数据系统/" itemprop="url">
-            <span itemprop="name">大数据系统</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-18T15:44:53+08:00"
-              content="2020-02-18">
-          02-18
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/18/创业基础-1-创业本质与创业思维/" itemprop="url">
-            <span itemprop="name">创业基础-1.创业本质与创业思维</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-17T16:53:33+08:00"
-              content="2020-02-17">
-          02-17
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/17/区块链技术与应用-以太坊/" itemprop="url">
-            <span itemprop="name">区块链技术与应用-以太坊</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-07T21:16:24+08:00"
-              content="2020-02-07">
-          02-07
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/07/书单/" itemprop="url">
-            <span itemprop="name">书单</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-07T16:50:19+08:00"
-              content="2020-02-07">
-          02-07
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/07/区块链技术与应用-比特币系统/" itemprop="url">
-            <span itemprop="name">区块链技术与应用-比特币系统</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/01/大数据运算系统/" rel="prev" title="大数据运算系统">
+      <i class="fa fa-chevron-left"></i> 大数据运算系统
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -349,6 +300,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式-strategy-pattern"><span class="nav-number">1.</span> <span class="nav-text">策略模式(strategy pattern)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题引入"><span class="nav-number">1.1.</span> <span class="nav-text">问题引入</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

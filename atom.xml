@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://bruceeezhao.github.io/"/>
-  <updated>2020-04-01T13:26:46.840Z</updated>
+  <updated>2020-10-14T10:20:49.241Z</updated>
   <id>https://bruceeezhao.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式学习之---01策略模式</title>
+    <link href="https://bruceeezhao.github.io/2020/10/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B9%8B-01%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/</id>
+    <published>2020-10-14T10:05:28.000Z</published>
+    <updated>2020-10-14T10:20:49.241Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="策略模式-strategy-pattern"><a href="#策略模式-strategy-pattern" class="headerlink" title="策略模式(strategy pattern)"></a>策略模式(strategy pattern)</h1><a id="more"></a><h2 id="问题引入"><a href="#问题引入" class="headerlink" title="问题引入"></a>问题引入</h2><p><strong>鸭子仿真程序</strong><br><img src="//bruceeezhao.github.io/2020/10/14/设计模式学习之-01策略模式/duck1.png" alt><br>假设有一个鸭子仿真程序，Duck类是一个抽象类</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;策略模式-strategy-pattern&quot;&gt;&lt;a href=&quot;#策略模式-strategy-pattern&quot; class=&quot;headerlink&quot; title=&quot;策略模式(strategy pattern)&quot;&gt;&lt;/a&gt;策略模式(strategy pattern)&lt;/h1&gt;
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://bruceeezhao.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://bruceeezhao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="Java" scheme="https://bruceeezhao.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>大数据运算系统</title>
