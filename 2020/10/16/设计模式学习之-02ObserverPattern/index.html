@@ -47,19 +47,30 @@
   };
 </script>
 
-  <meta name="description" content="成为创业者##　创业能力">
+  <meta name="description" content="1. 天气应用系统中共有3中角色：">
+<meta name="keywords" content="设计模式,Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="创业基础-2.如何创业">
-<meta property="og:url" content="https://bruceeezhao.github.io/2020/02/25/创业基础-2-如何创业/index.html">
+<meta property="og:title" content="设计模式学习之-02ObserverPattern">
+<meta property="og:url" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="成为创业者##　创业能力">
+<meta property="og:description" content="1. 天气应用系统中共有3中角色：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-25T11:30:52.442Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/weatherApp.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-1.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-2.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-3.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-4.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-5.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-6.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-classDiagram.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/weatherDiagram.png">
+<meta property="og:updated_time" content="2020-10-16T11:57:53.496Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="创业基础-2.如何创业">
-<meta name="twitter:description" content="成为创业者##　创业能力">
+<meta name="twitter:title" content="设计模式学习之-02ObserverPattern">
+<meta name="twitter:description" content="1. 天气应用系统中共有3中角色：">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/weatherApp.png">
 
-<link rel="canonical" href="https://bruceeezhao.github.io/2020/02/25/创业基础-2-如何创业/">
+<link rel="canonical" href="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/">
 
 
 <script id="page-configurations">
@@ -73,7 +84,7 @@
   };
 </script>
 
-  <title>创业基础-2.如何创业 | Hexo</title>
+  <title>设计模式学习之-02ObserverPattern | Hexo</title>
   
 
 
@@ -187,7 +198,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
-    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/02/25/创业基础-2-如何创业/">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          创业基础-2.如何创业
+          设计模式学习之-02ObserverPattern
         </h1>
 
         <div class="post-meta">
@@ -211,7 +222,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-02-25 16:03:50 / Modified: 19:30:52" itemprop="dateCreated datePublished" datetime="2020-02-25T16:03:50+08:00">2020-02-25</time>
+              <time title="Created: 2020-10-16 10:10:36 / Modified: 19:57:53" itemprop="dateCreated datePublished" datetime="2020-10-16T10:10:36+08:00">2020-10-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,8 +230,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/创业基础/" itemprop="url" rel="index">
-                    <span itemprop="name">创业基础</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
             </span>
@@ -236,85 +247,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="成为创业者"><a href="#成为创业者" class="headerlink" title="成为创业者"></a>成为创业者</h1><p>##　创业能力</p><a id="more"></a>
+        <h1 id="1-天气应用"><a href="#1-天气应用" class="headerlink" title="1. 天气应用"></a>1. 天气应用</h1><p>系统中共有3中角色：</p><a id="more"></a>
 <ol>
-<li>创业思维</li>
-<li>应变能力</li>
-<li>拓展资源的能力</li>
-<li>合作能力</li>
-<li>自我反省的能力</li>
-<li>冒险精神</li>
-<li>社会责任</li>
+<li>天气站： 获取真实天气数据的物理设备</li>
+<li>天气数据对象： 从天气站获取数据并更新显示设备</li>
+<li>显示设备： 向用户展示当前的天气</li>
 </ol>
-<h2 id="创业者素质"><a href="#创业者素质" class="headerlink" title="创业者素质"></a>创业者素质</h2><ol>
-<li>领袖精神</li>
-<li>自信</li>
-<li>勇气</li>
-<li>创新精神</li>
-<li>魄力</li>
-<li>敏锐眼光</li>
-<li>毅力和意志</li>
-<li>自我调节能力</li>
-</ol>
-<h1 id="认识创业机会"><a href="#认识创业机会" class="headerlink" title="认识创业机会"></a>认识创业机会</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong>创业机会是具有商业价值的创意</strong>  </p>
-<h2 id="创业机会的特征："><a href="#创业机会的特征：" class="headerlink" title="创业机会的特征："></a><strong>创业机会的特征：</strong></h2><ol>
-<li>能吸引顾客，挖掘顾客的真实需求</li>
-<li>在商业环境中行得通，有竞争力</li>
-<li>在机会之床存在的期间被实施。（机会之窗指在商业想法推广到市场上去所话的时间，若竞争者已经有了同样的思想，并吧产品已推向市场，那么机会之窗也就关闭了。）</li>
-<li>创业者必须有资源和技能才能创立业务，这里的资源包括：人、财、物、信息和时间等。</li>
-</ol>
-<h2 id="创业机会的类型"><a href="#创业机会的类型" class="headerlink" title="创业机会的类型"></a>创业机会的类型</h2><ul>
-<li>问题型</li>
-<li>趋势型</li>
-<li>组合型</li>
-</ul>
-<h2 id="机会识别方法"><a href="#机会识别方法" class="headerlink" title="机会识别方法"></a>机会识别方法</h2><ul>
-<li>问题分心</li>
-<li>创造需求</li>
-</ul>
-<h2 id="创业机会评价"><a href="#创业机会评价" class="headerlink" title="创业机会评价"></a>创业机会评价</h2><p>基本标准：</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/weatherApp.png" alt></p>
+<p>需求：</p>
 <ol>
-<li>机会对产品有明确界定的市场需求，退出的实际也是恰当的</li>
-<li>投资的项目必须能够维持持久的竞争优势</li>
-<li>投资必须具有一定成都的高汇报，从而允许一些投资中的失误</li>
-<li>创业者和创业机会时间必须相互适应</li>
-<li>创业机会中不存在致命的缺陷</li>
+<li>WeatherData对象可以获取天气信息，信息发生变化时，将信息推送给显示设备</li>
+<li>有三种显示设备：current conditions, weather stats, forecast</li>
 </ol>
-<h1 id="组建创业团队"><a href="#组建创业团队" class="headerlink" title="组建创业团队"></a>组建创业团队</h1><h2 id="团队组建"><a href="#团队组建" class="headerlink" title="团队组建"></a>团队组建</h2><ol>
-<li>自我评估</li>
+<h1 id="2-Observer-Pattern"><a href="#2-Observer-Pattern" class="headerlink" title="2. Observer Pattern"></a>2. Observer Pattern</h1><h2 id="2-1-订阅报纸或杂志是怎么工作的？"><a href="#2-1-订阅报纸或杂志是怎么工作的？" class="headerlink" title="2.1. 订阅报纸或杂志是怎么工作的？"></a>2.1. 订阅报纸或杂志是怎么工作的？</h2><ol>
+<li>报纸出版商开始发布报纸</li>
+<li>订阅者向出版商订阅报纸，每次发行了新的报纸，出版商会把新报纸寄给订阅者</li>
+<li>如果你不想在看报纸，你可以取消订阅，出版商就会停止报纸的邮寄</li>
+<li>只要出版商还存在，人们、旅馆等就可以不断地订阅或取消订阅出版物。</li>
 </ol>
-<ul>
-<li>知识基础</li>
-<li>专门技能</li>
-<li>动机</li>
-<li>承诺</li>
-<li>个人特质</li>
-</ul>
-<ol start="2">
-<li>成员评估</li>
-</ol>
-<ul>
-<li>互补性</li>
-<li>相似性</li>
-</ul>
-<p>在知识、技能和经验方面主要关注互补性，而在个人特征和动机方面则考虑相似性。</p>
+<h2 id="2-2-Publisher-Subscribers-Observer-Pattern"><a href="#2-2-Publisher-Subscribers-Observer-Pattern" class="headerlink" title="2.2. Publisher + Subscribers = Observer Pattern"></a>2.2. Publisher + Subscribers = Observer Pattern</h2><p>以报纸订阅为例：</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-1.png" alt></p>
+<p>newspaper object表示一个报纸出版商(publisher)的对象，Joe，Jenny，Tom是三个用户对象，他们向newspaper object发起订阅（或称向newspaper注册），完成了订阅的动作之后他们就成为了订阅者，当newspaper发布新一期的报纸时，这三个用户将会收到更新。我们将发布者(publisher)称为subject，将订阅者(subscribers)称为Observers。</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-2.png" alt></p>
+<p>这时一个非订阅者Penny也想要获取报纸，Penny需要向出版商订阅</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-3.png" alt></p>
+<p>现在Penny就成为了一个Observer，报纸更新时，就会推送给Penny和其他的Observer</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-4.png" alt></p>
+<p>如果用户Tom不想再继续看报纸了，他就可以取消订阅，此时Tom就不再是一个Observer了</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-5.png" alt></p>
+<p>newspaper object就会把Tom移出推送列表，报纸更新时就不再会推送给Tom</p>
+<p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-6.png" alt></p>
+<h2 id="2-3-定义"><a href="#2-3-定义" class="headerlink" title="2.3. 定义"></a>2.3. 定义</h2><p><strong>The Observer Pattern</strong> defines a one-to-many dependency between objects so that when one object changes state,all of its dependents are notified and updated automatically.</p>
+<h2 id="2-4-观察者模式类图"><a href="#2-4-观察者模式类图" class="headerlink" title="2.4. 观察者模式类图"></a>2.4. 观察者模式类图</h2><p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/Observer-classDiagram.png" alt></p>
+<h2 id="2-5-松耦合"><a href="#2-5-松耦合" class="headerlink" title="2.5. 松耦合"></a>2.5. 松耦合</h2><p>当两个对象之间的关系是松耦合时，他们可以交互，但是他们只知道彼此很少的信息。</p>
+<p>观察者模式提供了一种subject和observer对象间松耦合的设计模式。</p>
 <ol>
-<li>知识评估</li>
-<li>经历评估</li>
-<li>经验评估</li>
-<li>关系评估</li>
-<li>能力评估</li>
+<li>subject对于observer的了解仅仅是知道observer实现了一个特定的接口(Observer接口)，subject不需要知道任何关于observer的其他信息</li>
+<li>可以随时添加一个新的observer</li>
+<li>增加新类型的observer时不需要修改subject</li>
+<li>可以独立的重用subject和observer</li>
+<li>改变subject或observer不会相互影响</li>
 </ol>
-<h2 id="行动原则"><a href="#行动原则" class="headerlink" title="行动原则"></a>行动原则</h2><ol>
-<li>创业机会</li>
-<li>凝聚力</li>
-<li>合作精神</li>
-<li>完整性（利弊权衡）</li>
-<li>长远目标</li>
-<li>价值创造</li>
-<li>公正性</li>
-</ol>
-<h2 id="创业团队的领导"><a href="#创业团队的领导" class="headerlink" title="创业团队的领导"></a>创业团队的领导</h2>
+<p><strong>松耦合设计允许我们构建灵活的OO系统，这个系统可以handle change，因为他们最小化了对象间的相互依赖</strong></p>
+<h1 id="3-天气应用的设计实现"><a href="#3-天气应用的设计实现" class="headerlink" title="3. 天气应用的设计实现"></a>3. 天气应用的设计实现</h1><p><img src="//bruceeezhao.github.io/2020/10/16/设计模式学习之-02ObserverPattern/weatherDiagram.png" alt></p>
+
     </div>
 
     
@@ -322,6 +298,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
 
         
 
@@ -329,13 +309,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/02/19/大数据系统/" rel="prev" title="大数据系统">
-      <i class="fa fa-chevron-left"></i> 大数据系统
+    <a href="/2020/10/14/设计模式学习之-01策略模式/" rel="prev" title="设计模式学习之---01策略模式">
+      <i class="fa fa-chevron-left"></i> 设计模式学习之---01策略模式
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/06/智能计算系统/" rel="next" title="智能计算系统">
-      智能计算系统 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -373,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成为创业者"><span class="nav-number">1.</span> <span class="nav-text">成为创业者</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创业者素质"><span class="nav-number">1.1.</span> <span class="nav-text">创业者素质</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#认识创业机会"><span class="nav-number">2.</span> <span class="nav-text">认识创业机会</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创业机会的特征："><span class="nav-number">2.2.</span> <span class="nav-text">创业机会的特征：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创业机会的类型"><span class="nav-number">2.3.</span> <span class="nav-text">创业机会的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机会识别方法"><span class="nav-number">2.4.</span> <span class="nav-text">机会识别方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创业机会评价"><span class="nav-number">2.5.</span> <span class="nav-text">创业机会评价</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组建创业团队"><span class="nav-number">3.</span> <span class="nav-text">组建创业团队</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#团队组建"><span class="nav-number">3.1.</span> <span class="nav-text">团队组建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行动原则"><span class="nav-number">3.2.</span> <span class="nav-text">行动原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创业团队的领导"><span class="nav-number">3.3.</span> <span class="nav-text">创业团队的领导</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-天气应用"><span class="nav-number">1.</span> <span class="nav-text">1. 天气应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Observer-Pattern"><span class="nav-number">2.</span> <span class="nav-text">2. Observer Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-订阅报纸或杂志是怎么工作的？"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 订阅报纸或杂志是怎么工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Publisher-Subscribers-Observer-Pattern"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. Publisher + Subscribers = Observer Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-定义"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-观察者模式类图"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 观察者模式类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-松耦合"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 松耦合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-天气应用的设计实现"><span class="nav-number">3.</span> <span class="nav-text">3. 天气应用的设计实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
