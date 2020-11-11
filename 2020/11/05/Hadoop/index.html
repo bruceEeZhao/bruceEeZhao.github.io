@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://bruceeezhao.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1. Hadoop初识">
+<meta name="keywords" content="大数据,Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop">
+<meta property="og:url" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. Hadoop初识">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/Hadoop1vs2.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/hdfsarchitecture.png">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/yarn_architecture.gif">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/hdfsarchitecture.png">
+<meta property="og:updated_time" content="2020-11-10T08:35:42.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop">
+<meta name="twitter:description" content="1. Hadoop初识">
+<meta name="twitter:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/Hadoop1vs2.png">
+
+<link rel="canonical" href="https://bruceeezhao.github.io/2020/11/05/Hadoop/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Hadoop | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://bruceeezhao.github.io/2020/11/05/Hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bruce zhao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-05 19:44:48" itemprop="dateCreated datePublished" datetime="2020-11-05T19:44:48+08:00">2020-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-10 16:35:42" itemprop="dateModified" datetime="2020-11-10T16:35:42+08:00">2020-11-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="//bruceeezhao.github.io/2020/11/05/Hadoop/Hadoop1vs2.png" alt></p><h1 id="1-Hadoop初识"><a href="#1-Hadoop初识" class="headerlink" title="1. Hadoop初识"></a>1. Hadoop初识</h1><a id="more"></a>
+<h2 id="1-1-Hadoop1-x-与-2-x的区别"><a href="#1-1-Hadoop1-x-与-2-x的区别" class="headerlink" title="1.1. Hadoop1.x 与 2.x的区别"></a>1.1. Hadoop1.x 与 2.x的区别</h2><p>如首图所示，在1.x中MapReduce负责计算和资源调度，在2.x中，将资源调度的功能从MapReduce中分离出来，增加了Yarn模块。</p>
+<h2 id="1-2-HDFS架构"><a href="#1-2-HDFS架构" class="headerlink" title="1.2. HDFS架构"></a>1.2. HDFS架构</h2><p><a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html" target="_blank" rel="noopener">HDFS文档</a></p>
+<p><img src="//bruceeezhao.github.io/2020/11/05/Hadoop/hdfsarchitecture.png" alt></p>
+<ol>
+<li>NameNode: 存储文件的元数据，如文件名，文件目录结构，文件属性（生成时间、副本数、文件权限），以及每个文件的块列表和块所在的DataNode等</li>
+<li>DataNode: 在本地文件系统存储文件块数据，以及块数据的校验和</li>
+<li>Secondary NameNode：用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照</li>
+</ol>
+<h2 id="1-3-Yarn架构"><a href="#1-3-Yarn架构" class="headerlink" title="1.3. Yarn架构"></a>1.3. Yarn架构</h2><p><a href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html" target="_blank" rel="noopener">Yarn文档</a></p>
+<p><img src="//bruceeezhao.github.io/2020/11/05/Hadoop/yarn_architecture.gif" alt></p>
+<ol>
+<li><p>Resource Manager:的主要功能</p>
+<ol>
+<li>处理客户端请求</li>
+<li>监控NodeManager</li>
+<li>启动或监控ApplicationMaster</li>
+<li>资源的分配与调度</li>
+</ol>
+</li>
+<li><p>NodeManager:的主要功能</p>
+<ol>
+<li>管理单个节点上的资源</li>
+<li>处理来自Resource Manager的命令</li>
+<li>处理来自ApplicationMaster的命令</li>
+</ol>
+</li>
+<li><p>ApplicationMaste:</p>
+<ol>
+<li>负责数据的切分</li>
+<li>为应用程序申请资源与分配给内部的任务</li>
+<li>任务的监控与容错</li>
+</ol>
+</li>
+<li><p>Container</p>
+<p>Container是Yarn中的资源抽象，它封装了某个节点上的多维度资源，如内存、CPU、磁盘、网络等。</p>
+</li>
+</ol>
+<h2 id="1-4-MapReduce"><a href="#1-4-MapReduce" class="headerlink" title="1.4. MapReduce"></a>1.4. MapReduce</h2><p><a href="http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html" target="_blank" rel="noopener">MapReduce文档</a></p>
+<p>MapReduce将计算过程分为两个阶段：Map和Redece</p>
+<p>1) Map阶段并行处理输入数据</p>
+<p>2) Reduce阶段对Map结果进行汇总</p>
+<h1 id="2-HDFS"><a href="#2-HDFS" class="headerlink" title="2. HDFS"></a>2. HDFS</h1><p>使用场景：适合一次写入，多次读出的场景，且不支持文件修改。适合用来做数据分析。</p>
+<h2 id="2-1-优缺点"><a href="#2-1-优缺点" class="headerlink" title="2.1. 优缺点"></a>2.1. 优缺点</h2><h3 id="2-1-1-优点"><a href="#2-1-1-优点" class="headerlink" title="2.1.1. 优点"></a>2.1.1. 优点</h3><ol>
+<li>高容错性<ol>
+<li>数据自动保存多个副本，通过增加副本的形式提高容错性。</li>
+<li>某一个副本丢失后，会自动创建新的副本，保证副本的数量</li>
+</ol>
+</li>
+<li>适合处理大数据<ol>
+<li>数据规模：能够处理GB,TB甚至PB级的数据</li>
+<li>文件规模：能够处理百万规模以上的文件数量</li>
+</ol>
+</li>
+<li>可在廉价机上构建</li>
+</ol>
+<h3 id="2-1-2-缺点"><a href="#2-1-2-缺点" class="headerlink" title="2.1.2. 缺点"></a>2.1.2. 缺点</h3><ol>
+<li>不适合低延时数据访问，比如毫秒级</li>
+<li>无法高效的对大量小文件进行存储<ol>
+<li>存储小文件会占用NameNode大量的内存来存储文件目录和块信息。</li>
+<li>小文件存储的寻址时间会超过读取时间</li>
+</ol>
+</li>
+<li>不支持并发写入，文件随机修改<ol>
+<li>一个文件只能有一个写，不允许多个线程同时写</li>
+<li>仅支持数据追加（append），不支持文件随机修改</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-2-组成架构"><a href="#2-2-组成架构" class="headerlink" title="2.2. 组成架构"></a>2.2. 组成架构</h2><p><img src="//bruceeezhao.github.io/2020/11/05/Hadoop/hdfsarchitecture.png" alt></p>
+<ol>
+<li>NameNode: （master）<ol>
+<li>管理HDFS的名称空间</li>
+<li>配置副本策略</li>
+<li>管理数据块（Block）映射信息</li>
+<li>处理客户端读写请求</li>
+</ol>
+</li>
+<li>DataNode: （slave）<ol>
+<li>存储实际的数据块</li>
+<li>执行数据块的读写操作</li>
+</ol>
+</li>
+<li>client<ol>
+<li>文件切分。文件上传HDFS的时候，Client将文件切分成多个Block，然后上传。</li>
+<li>与NameNode交互，获取文件的位置信息。</li>
+<li>与DataNode交互，读取或写入数据。</li>
+<li>Client提供一些命令管理HDFS</li>
+<li>通过命令访问HDFS，如增删查改等</li>
+</ol>
+</li>
+<li>Secondary NameNode：并非NameNode的热备。当NameNode挂掉的时候并不能马上替换NameNode并提供服务<ol>
+<li>复制NameNode，分担其工作，如定期合并Fsimage和Edits，并推送给NameNode</li>
+<li>在紧急情况下，可辅助恢复NameNode</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-2-1-文件块大小（面试题）"><a href="#2-2-1-文件块大小（面试题）" class="headerlink" title="2.2.1. 文件块大小（面试题）"></a>2.2.1. 文件块大小（面试题）</h3><p>通过配置参数 <code>dfs.blocksize</code>来确定，默认大小在Hadoop2.x中是128M，老版本中是64M。这个大小是根据寻址时间和硬盘写入速度确定的，最佳状态是寻址时间是传输时间的1%。按寻址时间10ms，传输速度100M/s来计算，块大小需为100M。</p>
+<p>块设置很小，就会增加寻址时间；如果太大，传输数据的时间会明显大于寻址时间。</p>
+<h2 id="2-3-HDFS-API"><a href="#2-3-HDFS-API" class="headerlink" title="2.3. HDFS API"></a>2.3. HDFS API</h2><h3 id="2-3-1-环境配置"><a href="#2-3-1-环境配置" class="headerlink" title="2.3.1. 环境配置"></a>2.3.1. 环境配置</h3><ol>
+<li><p>新建mvn工程</p>
+</li>
+<li><p>添加依赖</p>
+<p>在<a href="https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client/2.9.2" target="_blank" rel="noopener">https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client/2.9.2</a> 选择与部署hadoop版本相同的mvn依赖，并添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置log4j</p>
+<ol>
+<li><p>新建log4j.properties文件</p>
+</li>
+<li><p>把下面的内容添加到文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">### 设置###</span><br><span class="line">log4j.rootLogger = info,stdout,D,E</span><br><span class="line"></span><br><span class="line">### 输出信息到控制抬 ###</span><br><span class="line">log4j.appender.stdout = org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.stdout.Target = System.out</span><br><span class="line">log4j.appender.stdout.layout = org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n</span><br><span class="line"></span><br><span class="line">### 输出DEBUG 级别以上的日志到=E://logs/error.log ###</span><br><span class="line">log4j.appender.D = org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.D.File = ./logs/log.log</span><br><span class="line">log4j.appender.D.Append = true</span><br><span class="line">log4j.appender.D.Threshold = DEBUG</span><br><span class="line">log4j.appender.D.layout = org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.D.layout.ConversionPattern = %-d&#123;yyyy-MM-dd HH:mm:ss&#125;  [ %t:%r ] - [ %p ]  %m%n</span><br><span class="line"></span><br><span class="line">### 输出ERROR 级别以上的日志到=E://logs/error.log ###</span><br><span class="line">log4j.appender.E = org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.E.File =./logs/error.log</span><br><span class="line">log4j.appender.E.Append = true</span><br><span class="line">log4j.appender.E.Threshold = ERROR</span><br><span class="line">log4j.appender.E.layout = org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.E.layout.ConversionPattern = %-d&#123;yyyy-MM-dd HH:mm:ss&#125;  [ %t:%r ] - [ %p ]  %m%n</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HDFSClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HDFSClient h = <span class="keyword">new</span> HDFSClient();</span><br><span class="line">        h.test();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 0 一个简单的测试</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1 获取hdfs客户端对象</span></span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2 在hdfs上创建路径</span></span><br><span class="line">            fs.mkdirs(<span class="keyword">new</span> Path(<span class="string">"/1109/dashi"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3 关闭资源</span></span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"over"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hadoop fs -ls /</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - bruce supergroup          0 2020-11-10 10:56 /1109</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="2-3-2-上传文件"><a href="#2-3-2-上传文件" class="headerlink" title="2.3.2. 上传文件"></a>2.3.2. 上传文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 文件上传</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCopyFromLoaclFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 获取fs对象</span></span><br><span class="line">       Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">       conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">       FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">           <span class="comment">// 执行上传api</span></span><br><span class="line">           fs.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">"/home/bruce/Desktop/hadooptest.txt"</span>), <span class="keyword">new</span> Path(<span class="string">"/hadooptest.txt"</span>));</span><br><span class="line"></span><br><span class="line">           <span class="comment">// 关闭资源</span></span><br><span class="line">           fs.close();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hadoop fs -ls /</span><br><span class="line">Found 2 items</span><br><span class="line">drwxr-xr-x   - bruce supergroup          0 2020-11-10 10:56 /1109</span><br><span class="line">-rw-r--r--   3 bruce supergroup         97 2020-11-10 11:15 /hadooptest.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-3-下载文件"><a href="#2-3-3-下载文件" class="headerlink" title="2.3.3. 下载文件"></a>2.3.3. 下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2 文件下载</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCopyToLocalFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 获取fs对象</span></span><br><span class="line">       Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">       conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">       FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">           <span class="comment">// 执行下载api</span></span><br><span class="line">           fs.copyToLocalFile(<span class="keyword">new</span> Path(<span class="string">"/hadooptest.txt"</span>), <span class="keyword">new</span> Path(<span class="string">"./hadoop.txt"</span>));</span><br><span class="line">           <span class="comment">// 关闭资源</span></span><br><span class="line">           fs.close();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-4-文件删除"><a href="#2-3-4-文件删除" class="headerlink" title="2.3.4. 文件删除"></a>2.3.4. 文件删除</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3 文件删除</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取fs对象</span></span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 执行删除api</span></span><br><span class="line">            fs.delete(<span class="keyword">new</span> Path(<span class="string">"/hadooptest.txt"</span>));</span><br><span class="line">            <span class="comment">// 关闭资源</span></span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-5-文件信息打印"><a href="#2-3-5-文件信息打印" class="headerlink" title="2.3.5. 文件信息打印"></a>2.3.5. 文件信息打印</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 4 查看文件信息</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testListFiles</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取fs对象</span></span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 查看文件信息</span></span><br><span class="line">            RemoteIterator&lt;LocatedFileStatus&gt; listFiles = fs.listFiles(<span class="keyword">new</span> Path(<span class="string">"/"</span>), <span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">while</span> (listFiles.hasNext()) &#123;</span><br><span class="line">                LocatedFileStatus fileStatus = listFiles.next();</span><br><span class="line">                System.out.println(fileStatus.getPath().getName());</span><br><span class="line">                System.out.println(fileStatus.getPermission());</span><br><span class="line">                System.out.println(fileStatus.getLen());</span><br><span class="line"></span><br><span class="line">                BlockLocation[] blockLocations = fileStatus.getBlockLocations();</span><br><span class="line">                <span class="keyword">for</span> (BlockLocation block: blockLocations</span><br><span class="line">                     ) &#123;</span><br><span class="line">                    String[] hosts = block.getHosts();</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">for</span> (String host: hosts) &#123;</span><br><span class="line">                        System.out.println(host);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">"===================="</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 关闭资源</span></span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-HDFS-I-O流操作"><a href="#2-4-HDFS-I-O流操作" class="headerlink" title="2.4. HDFS I/O流操作"></a>2.4. HDFS I/O流操作</h2><h3 id="2-4-1-上传文件"><a href="#2-4-1-上传文件" class="headerlink" title="2.4.1. 上传文件"></a>2.4.1. 上传文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上传文件</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpLoadFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1 获取对象</span></span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2 获取输入流</span></span><br><span class="line">            FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(<span class="string">"/home/bruce/Desktop/hadooptest.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3 获取输出流</span></span><br><span class="line">            FSDataOutputStream fos = fs.create(<span class="keyword">new</span> Path(<span class="string">"/zhangsan.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4 流的对烤</span></span><br><span class="line">            IOUtils.copyBytes(fis, fos, conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 5 关闭资源</span></span><br><span class="line">            IOUtils.closeStream(fis);</span><br><span class="line">            IOUtils.closeStream(fos);</span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-2-下载文件"><a href="#2-4-2-下载文件" class="headerlink" title="2.4.2. 下载文件"></a>2.4.2. 下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下载文件</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDownFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1 获取对象</span></span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2 获取输入流</span></span><br><span class="line">            FSDataInputStream fis = fs.open(<span class="keyword">new</span> Path(<span class="string">"/zhangsan.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3 获取输出流</span></span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(<span class="string">"./lisi.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4 流的对烤</span></span><br><span class="line">            IOUtils.copyBytes(fis, fos, conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 5 关闭资源</span></span><br><span class="line">            IOUtils.closeStream(fis);</span><br><span class="line">            IOUtils.closeStream(fos);</span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-3-读取部分文件"><a href="#2-4-3-读取部分文件" class="headerlink" title="2.4.3. 读取部分文件"></a>2.4.3. 读取部分文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取部分内容</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFileSeek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line">        FileSystem fs = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1 获取对象</span></span><br><span class="line">            fs = FileSystem.get(conf);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2 获取输入流</span></span><br><span class="line">            FSDataInputStream fis = fs.open(<span class="keyword">new</span> Path(<span class="string">"/zhangsan.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3 获取输出流</span></span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(<span class="string">"./wangwu.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4 流的对烤</span></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="number">1</span> ; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> len = fis.read(bytes,<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">                fos.write(bytes,<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 5 关闭资源</span></span><br><span class="line">            fis.close();</span><br><span class="line">            fos.close();</span><br><span class="line">            fs.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/大数据/" rel="tag"># 大数据</a>
+              <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/01/Java多线程/" rel="prev" title="Java多线程">
+      <i class="fa fa-chevron-left"></i> Java多线程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/06/设计模式学习之-04工厂模式/" rel="next" title="设计模式学习之-04工厂模式">
+      设计模式学习之-04工厂模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Hadoop初识"><span class="nav-number">1.</span> <span class="nav-text">1. Hadoop初识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Hadoop1-x-与-2-x的区别"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. Hadoop1.x 与 2.x的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-HDFS架构"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. HDFS架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Yarn架构"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. Yarn架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-MapReduce"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. MapReduce</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HDFS"><span class="nav-number">2.</span> <span class="nav-text">2. HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-优缺点"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-优点"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-缺点"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2. 缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-组成架构"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 组成架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-文件块大小（面试题）"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 文件块大小（面试题）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-HDFS-API"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. HDFS API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-环境配置"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1. 环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-上传文件"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2. 上传文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-下载文件"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3. 下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-文件删除"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4. 文件删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-文件信息打印"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5. 文件信息打印</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-HDFS-I-O流操作"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. HDFS I/O流操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-上传文件"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 上传文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-下载文件"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-读取部分文件"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 读取部分文件</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bruce zhao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bruceEeZhao" title="GitHub → https://github.com/bruceEeZhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/bruceezhao@foxmail.com" title="E-Mail → bruceezhao@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bruce zhao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
