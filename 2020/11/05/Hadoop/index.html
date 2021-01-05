@@ -83,7 +83,8 @@
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/fair.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/speculate.png">
 <meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/7_1.png">
-<meta property="og:updated_time" content="2020-12-22T10:04:28.112Z">
+<meta property="og:image" content="https://bruceeezhao.github.io/2020/11/05/Hadoop/yarn-marreduce.png">
+<meta property="og:updated_time" content="2021-01-05T10:52:28.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop">
 <meta name="twitter:description" content="1. Hadoop初识">
@@ -247,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-22 18:04:28" itemprop="dateModified" datetime="2020-12-22T18:04:28+08:00">2020-12-22</time>
+                <time title="Modified: 2021-01-05 18:52:28" itemprop="dateModified" datetime="2021-01-05T18:52:28+08:00">2021-01-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1472,8 +1473,11 @@
 <li><p>Driver2</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoIndexDriver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException, InterruptedException </span>&#123;</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://localhost:9091"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1 获取Job对象</span></span><br><span class="line">        Job job = Job.getInstance(conf);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2 设置jar存储位置</span></span><br><span class="line">        job.setJarByClass(TwoIndexDriver.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3 关联Map和Reduce类</span></span><br><span class="line">        job.setMapperClass(TwoIndexMapper.class);</span><br><span class="line">        job.setReducerClass(TwoIndexReducer.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4 设置Mapper阶段输出数据的key，value类型</span></span><br><span class="line">        job.setMapOutputKeyClass(Text.class);</span><br><span class="line">        job.setMapOutputValueClass(Text.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5 设置最终数据输出的key，value类型</span></span><br><span class="line">        job.setOutputKeyClass(Text.class);</span><br><span class="line">        job.setOutputValueClass(Text.class);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 6 设置输入路径和输出路径</span></span><br><span class="line">        FileInputFormat.setInputPaths(job, <span class="keyword">new</span> Path(<span class="string">"/index2"</span>));</span><br><span class="line">        FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(<span class="string">"/output2"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 7 提交job</span></span><br><span class="line">        job.waitForCompletion(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ol>
+<p><img src="//bruceeezhao.github.io/2020/11/05/Hadoop/yarn-marreduce.png" alt></p>
 
     </div>
 
@@ -1605,7 +1609,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
